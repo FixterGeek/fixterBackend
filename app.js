@@ -10,6 +10,7 @@ const logger = require("morgan");
 const path = require("path");
 const passport = require("passport");
 require("./helpers/passport");
+const cors = require('cors');
 const session = require("express-session");
 //var MongoStore = require("connect-mongostore")(express);
 
@@ -62,6 +63,12 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// CORS
+
+app.use(cors({
+	origin: ["http://localhost:3001", "https://fixter.camp"]
+}));
+
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
 app.use(express.static(path.join(__dirname, "public")));
@@ -73,8 +80,13 @@ app.locals.title = "Express - Generated with IronGenerator";
 const index = require("./routes/index");
 const mailRoutes = require("./routes/mailRoutes");
 let auth = require("./routes/auth");
+const payments = require('./routes/payments');
+const course = require("./routes/courses");
 app.use("/mailing", mailRoutes);
 app.use("/", auth);
 app.use("/", index);
+app.use('/payments', payments);
+app.use("/course", course);
+
 
 module.exports = app;
