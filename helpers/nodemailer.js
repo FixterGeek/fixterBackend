@@ -3,9 +3,9 @@ var hbs = require('nodemailer-express-handlebars');
 var options = {
   viewEngine: {
     extname: '.hbs',
-    layoutsDir: 'views/email/',
+    layoutsDir: '../views/email/',
     defaultLayout: 'template',
-    partialsDir: 'views/partials/'
+    partialsDir: '../views/partials/'
   },
   viewPath: '../views/email/',
   extName: '.hbs'
@@ -20,8 +20,8 @@ const transport = nodemailer.createTransport({
   },
 })
 
-function welcomeMail(nombre, email, tel, msj) {
-  transport..use('compile', hbs(options))
+function contactMail(nombre, email, tel, msj) {
+  transport.use('compile', hbs(options))
   transport.sendMail({
     bcc: email,
     subject: 'Fixter Info.',
@@ -37,4 +37,4 @@ function welcomeMail(nombre, email, tel, msj) {
   })
 }
 
-module.exports = { welcomeMail }
+module.exports = { contactMail }
