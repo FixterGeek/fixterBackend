@@ -32,9 +32,9 @@ router.post('/conekta', (req, res, next)=>{
     {
       currency: "MXN",
       customer_info: {
-        name: 'Héctor Bliss',//process.env.CONEKTA_NAME,
-        phone: '+527712412825',//process.env.CONEKTA_PHONE,
-        email: 'bliss@ironhack.com'//process.env.CONEKTA_EMAIL
+        name: process.env.CONEKTA_NAME,
+        phone: process.env.CONEKTA_PHONE,
+        email: process.env.CONEKTA_EMAIL
       },
       line_items: [
         {
