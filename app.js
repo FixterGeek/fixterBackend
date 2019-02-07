@@ -81,11 +81,13 @@ app.locals.title = "Express - Generated with IronGenerator";
 const index = require("./routes/index");
 const mailRoutes = require("./routes/mailRoutes");
 let auth = require("./routes/auth");
-const payments = require('./routes/payments')
+const payments = require('./routes/payments');
+const course = require("./routes/courses");
 app.use("/mailing", mailRoutes);
 app.use("/", auth);
 app.use("/", index);
-app.use('/payments', payments)
+app.use('/payments', payments);
+app.use("/course", course);
 
 
 module.exports = app;
