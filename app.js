@@ -81,12 +81,14 @@ const index = require("./routes/index");
 const mailRoutes = require("./routes/mailRoutes");
 let auth = require("./routes/auth");
 const payments = require('./routes/payments');
-const course = require("./routes/courses");
+const courses = require("./routes/courses");
+const aplications = require("./routes/aplications");
 app.use("/mailing", mailRoutes);
 app.use("/", auth);
 app.use("/", index);
-app.use('/payments', payments);
-app.use("/course", course);
+app.use("/payments", payments);
+app.use("/courses", courses);
+app.use("/aplications", aplications);
 
 
 module.exports = app;
