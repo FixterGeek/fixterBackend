@@ -8,14 +8,14 @@ function tryCatch(fn) {
 	};
 }
 
-router.get("/", tryCatch(controller.getAplications) );
+router.get("/", controller.getAplications );
 
-router.get("/:id", tryCatch(controller.getAplication) );
+router.get("/:id", controller.getAplication );
 
-router.post("/", tryCatch(controller.createAplication) );
+router.post("/", controller.createAplication);
 
-router.patch("/:id", tryCatch(controller.updateAplication) );
+router.patch("/:id", controller.updateAplication );
 
-router.delete("/:id", tryCatch(controller.deleteAplication) );
+router.delete("/:id", controller.deleteAplication );
 
 module.exports = router;

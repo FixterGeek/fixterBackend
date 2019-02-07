@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const courseSchema = new Schema({
 	duration: Number,
+	price: Number,
 	title: {
 		required: "Proporciona un titulo para el curso",
 		type: String
