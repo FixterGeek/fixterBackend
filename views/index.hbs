@@ -1,2 +1,37 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<h1>Testing la pasarela</h1>
+<form action="/payments/conekta" method="POST" id="card-form">
+  <span class="card-errors"></span>
+  <div>
+    <label>
+      <span>Nombre del tarjetahabiente</span>
+      <input type="text" size="20" data-conekta="card[name]">
+    </label>
+  </div>
+  <div>
+    <label>
+      <span>Número de tarjeta de crédito</span>
+      <input type="text" size="20" data-conekta="card[number]">
+    </label>
+  </div>
+  <div>
+    <label>
+      <span>CVC</span>
+      <input type="text" size="4" data-conekta="card[cvc]">
+    </label>
+  </div>
+  <div>
+    <label>
+      <span>Fecha de expiración (MM/AAAA)</span>
+      <input type="text" size="2" data-conekta="card[exp_month]">
+    </label>
+    <span>/</span>
+    <input type="text" size="4" data-conekta="card[exp_year]">
+  </div>
+   <div>
+    <label>
+      <span>Teléfono</span>
+      <input type="text" size="12" data-conekta="card[tel]">
+    </label>   
+  </div>
+  <button type="submit">Crear token</button>
+</form>
