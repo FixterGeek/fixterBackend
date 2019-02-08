@@ -18,7 +18,6 @@ controller.getCourses = async (req, res) => {
 	// si no hay query params mando todos
 	courses = await Course.find();
 	res.status(200).json({courses})
-
 };
 
 controller.createCourse = async (req, res) => {
@@ -26,8 +25,14 @@ controller.createCourse = async (req, res) => {
 	res.status(200).json(course);
 };
 
-controller.updateCourse = async (req, res) => {};
+controller.updateCourse = async (req, res) => {
+	const course = Course.findByIdAndUpdate(req.params.id, req.body, {new: true});
+	res.status(200).json(course);
+};
 
-controller.deleteCourse = async (req, res) => {};
+controller.deleteCourse = async (req, res) => {
+	const course = Course.findByIdAndRemove(req.params.id);
+	res.status(200).json(course);
+};
 
 module.exports = controller;
