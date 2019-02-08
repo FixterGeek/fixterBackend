@@ -8,7 +8,7 @@ function tryCatch(fn) {
 	};
 }
 
-router.get("/", tryCatch(controller.getCourse) );
+router.get("/", tryCatch(controller.getCourses) );
 
 router.post("/", tryCatch(controller.createCourse) );
 
