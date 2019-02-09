@@ -12,6 +12,7 @@ const passport = require("passport");
 require("./helpers/passport");
 const session = require("express-session");
 //var MongoStore = require("connect-mongostore")(express);
+const cors = require("cors");
 
 mongoose
   .connect(process.env.DB, { useNewUrlParser: true })
@@ -61,6 +62,14 @@ app.use(
 //passport
 app.use(passport.initialize());
 app.use(passport.session());
+
+// CORS
+
+app.use(
+  cors({
+    origin: ["http://localhost:3001", "https://fixter.camp"]
+  })
+);
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
