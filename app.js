@@ -12,8 +12,7 @@ const passport = require("passport");
 require("./helpers/passport");
 const cors = require('cors');
 const session = require("express-session");
-//var MongoStore = require("connect-mongostore")(express);
-const cors = require("cors");
+
 
 mongoose
   .connect(process.env.DB, { useNewUrlParser: true })
