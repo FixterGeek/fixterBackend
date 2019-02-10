@@ -67,7 +67,11 @@ app.use(passport.session());
 
 app.use(
   cors({
-    origin: ["http://localhost:3001", "https://fixter.camp"]
+    origin: [
+      "http://localhost:3001",
+      "https://fixter.camp",
+      "https://www.fixter.camp"
+    ]
   })
 );
 
