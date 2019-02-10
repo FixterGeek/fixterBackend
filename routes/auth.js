@@ -10,6 +10,8 @@ function tryCatch(fn) {
   };
 }
 
+//router.post('/login', tryCatch(controller.login))
+
 router.post("/signup", tryCatch(controller.signup));
 router.post(
   "/login/facebook/token",
