@@ -65,9 +65,16 @@ app.use(passport.session());
 
 // CORS
 
-app.use(cors({
-	origin: ["http://localhost:3001", "https://fixter.camp"]
-}));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3001",
+      "https://fixter.camp",
+      "https://www.fixter.camp"
+    ]
+  })
+);
+
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
@@ -82,15 +89,16 @@ const mailRoutes = require("./routes/mailRoutes");
 let auth = require("./routes/auth");
 const payments = require('./routes/payments');
 const courses = require("./routes/courses");
-const aplications = require("./routes/aplications");
 const editions = require("./routes/editions");
+let applications = require("./routes/applications");
+app.use("/apply", applications);
 app.use("/", auth);
 app.use("/", index);
 app.use("/mailing", mailRoutes);
 app.use("/payments", payments);
 app.use("/editions", editions);
 app.use("/courses", courses);
-app.use("/aplications", aplications);
+
 
 
 module.exports = app;

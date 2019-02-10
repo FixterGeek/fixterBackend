@@ -8,6 +8,11 @@ let userSchema = new Schema(
       type: String,
       required: true
     },
+    role: {
+      type: String,
+      enum: ["ADMIN", "GUEST"],
+      default: "GUEST"
+    },
     email: String,
     facebookId: String,
     googleId: String,

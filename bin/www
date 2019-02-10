@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-const http = require('http');
+const http = require("http");
 
-let app = require('../app');
+let app = require("../app");
 
 // catch 404 and render a not-found.hbs template
 app.use((req, res, next) => {
   res.status(404);
-  res.render('not-found');
+  res.render("not-found");
 });
 
 app.use((error, req, res, next) => {
@@ -23,16 +23,18 @@ app.use((error, req, res, next) => {
 
 let server = http.createServer(app);
 
-server.on('error', error => {
-  if (error.syscall !== 'listen') { throw error }
+server.on("error", error => {
+  if (error.syscall !== "listen") {
+    throw error;
+  }
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
-    case 'EACCES':
+    case "EACCES":
       console.error(`Port ${process.env.PORT} requires elevated privileges`);
       process.exit(1);
       break;
-    case 'EADDRINUSE':
+    case "EADDRINUSE":
       console.error(`Port ${process.env.PORT} is already in use`);
       process.exit(1);
       break;
