@@ -10,7 +10,11 @@ function tryCatch(fn) {
   };
 }
 
-//router.post('/login', tryCatch(controller.login))
+router.post(
+  "/login",
+  passport.authenticate("local"),
+  tryCatch(controller.login)
+);
 
 router.post("/signup", tryCatch(controller.signup));
 router.post(

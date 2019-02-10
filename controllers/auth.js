@@ -2,6 +2,12 @@ let User = require("../models/User");
 let { generateToken } = require("../helpers/jwt");
 let controller = {};
 
+controller.login = async (req, res) => {
+  //console.log(req.user);
+  let token = generateToken(req.user);
+  res.status(200).send({ user: req.user, token });
+};
+
 controller.signup = async (req, res) => {
   let exists = await User.findOne({ email: req.body.email });
   if (exists)
@@ -20,7 +26,7 @@ controller.loginFacebookToken = async (req, res) => {
 };
 
 controller.loginGoogleToken = async (req, res) => {
-  console.log(req.user);
+  //console.log(req.user);
   let token = generateToken(req.user);
   res.send({ user: req.user, token });
 };
