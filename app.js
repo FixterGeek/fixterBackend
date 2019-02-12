@@ -91,6 +91,8 @@ const payments = require('./routes/payments');
 const courses = require("./routes/courses");
 const editions = require("./routes/editions");
 let applications = require("./routes/applications");
+let payment = require("./routes/payment");
+app.use("/pay", payment);
 app.use("/apply", applications);
 app.use("/", auth);
 app.use("/", index);

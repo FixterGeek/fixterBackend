@@ -1,6 +1,6 @@
 let express = require("express");
 let router = express.Router();
-let controller = require("../controllers/applications");
+let controller = require("../controllers/payment");
 //jwt
 let { verifyToken } = require("../helpers/jwt");
 
@@ -10,10 +10,8 @@ function tryCatch(fn) {
   };
 }
 
-router.get("/admin/all", verifyToken, tryCatch(controller.adminAll));
 
-router.get('/self', verifyToken, tryCatch(controller.self))
 
-router.post("/", verifyToken, tryCatch(controller.apply));
+router.post("/", verifyToken, tryCatch(controller.pay));
 
 module.exports = router;
