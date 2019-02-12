@@ -87,6 +87,8 @@ const index = require("./routes/index");
 const mailRoutes = require("./routes/mailRoutes");
 let auth = require("./routes/auth");
 let applications = require("./routes/applications");
+let payment = require("./routes/payment");
+app.use("/pay", payment);
 app.use("/apply", applications);
 app.use("/mailing", mailRoutes);
 app.use("/", auth);

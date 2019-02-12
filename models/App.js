@@ -20,7 +20,12 @@ const appSchema = new Schema(
       required: true
     },
     course: String,
-    comments: String
+    comments: String,
+    paid:{
+      type:Boolean,
+      default:false
+    },
+    cost:Number
   },
   { timestamps: true }
 );
