@@ -8,7 +8,8 @@ controller.adminAll = async (req, res) => {
 };
 
 controller.apply = async (req, res) => {
-  console.log("lol", req.body);
+  // console.log("lol", req.body);
+  req.body.user = req.user._id;
   let app = await App.create(req.body);
   res.status(200).send(app);
 };
