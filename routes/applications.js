@@ -12,6 +12,8 @@ function tryCatch(fn) {
 
 router.get("/admin/all", verifyToken, tryCatch(controller.adminAll));
 
+router.get('/self', verifyToken, tryCatch(controller.self))
+
 router.post("/", verifyToken, tryCatch(controller.apply));
 
 module.exports = router;
