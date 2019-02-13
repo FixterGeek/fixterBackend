@@ -10,8 +10,6 @@ function tryCatch(fn) {
   };
 }
 
-
-
 router.post("/", verifyToken, tryCatch(controller.pay));
 
 module.exports = router;

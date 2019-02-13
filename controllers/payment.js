@@ -11,19 +11,17 @@ conekta.locale = 'es'
 
 controller.pay = (req,res) => {
   //conekta payment
-	console.log(req.body)
 
-  const {conektaTokenId, plazo, application} = req.body
+  const {conektaToken, plazo, application} = req.body
   const user = req.user
 
 	const chargeObj = {
 		payment_method: {
 			type: "card",
-			token_id: conektaTokenId
+			token_id: conektaToken
 		}
 	};
-
-  if(plazo !== "contado") chargeObj.monthly_installment = plazo;
+	if(plazo !== "contado") chargeObj.monthly_installment = plazo;
 
   conekta.Order.create(
     {
@@ -36,10 +34,10 @@ controller.pay = (req,res) => {
       line_items: [
         {
           name: application.course,
-          unit_price: course.cost*100,
+          unit_price: application.cost*100,
           quantity: 1
         }
-      ],      
+      ],
       charges: [chargeObj]
     },
     function(err, order) {

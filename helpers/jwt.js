@@ -24,7 +24,7 @@ exports.verifyToken = (req, res, next) => {
     if (err)
       return res
         .status(401)
-        .json({ message: "Token is invalid or has expired" });
+        .json({ message: "Token is invalid or has expired 👀" });
     User.findById(decoded.userId).then(user => {
       req.user = user;
       next();
