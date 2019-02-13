@@ -12,7 +12,7 @@ conekta.locale = 'es'
 controller.pay = (req,res) => {
   //conekta payment
 
-  const {conektaTokenId, plazo, application} = req.body
+  const {conektaToken, plazo, application} = req.body
   const {user} = req.user
 
   conekta.Order.create(
@@ -34,7 +34,7 @@ controller.pay = (req,res) => {
         {
           payment_method: {
             type: "card",
-            token_id: conektaTokenId
+            token_id: conektaToken
           },
           monthly_installment:plazo
         }
