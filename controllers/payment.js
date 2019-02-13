@@ -27,9 +27,9 @@ controller.pay = (req,res) => {
     {
       currency: "MXN",
       customer_info: {
-        name: user.name,
-        phone: user.phone,
-        email: user.email
+        name: 'Oswaldinho',
+        phone: '1234567890',
+        email: 'os@fixter.org'
       },
       line_items: [
         {
@@ -42,17 +42,15 @@ controller.pay = (req,res) => {
     },
     function(err, order) {
       if (err) return res.send(err);
-      console.log(order.toObject());
-      return res.send(order.toObject());
+			App.findByIdAndUpdate(application._id, {$set:{paid:true}}, {new:true})
+				.then(application=>{
+					return res.status(200).json({application, order: order.toObject()})
+				}).catch(e=>{
+				return res.status(400).json(e)
+			})
     }
   );
 
-  App.findByIdAndUpdate(application._id, {$set:{paid:true}}, {new:true})
-    .then(application=>{
-      return res.status(200).json(application)
-    }).catch(e=>{
-      return res.status(400).json(e)
-    })
   
 }
 

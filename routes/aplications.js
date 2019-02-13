@@ -12,7 +12,7 @@ router.get("/", controller.getAplications );
 
 router.get("/:id", controller.getAplication );
 
-router.post("/", controller.createAplication);
+router.post("/", tryCatch(controller.createAplication));
 
 router.patch("/:id", controller.updateAplication );
 

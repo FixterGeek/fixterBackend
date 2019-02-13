@@ -21,7 +21,9 @@ controller.getAplication = (req, res) => {
     })
 };
 
-controller.createAplication = (req, res) => {
+controller.createAplication = async (req, res) => {
+	const course = await Course.findById(req.body.course);
+	req.body.cost = course.price;
   Aplication.create(req.body)
     .then(aplications=>{
       return res.status(201).json(aplications)
