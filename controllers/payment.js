@@ -21,15 +21,15 @@ controller.pay = (req,res) => {
 			token_id: conektaToken
 		}
 	};
-	if(plazo !== "contado") chargeObj.monthly_installment = plazo;
+	if(plazo !== "contado") chargeObj.monthly_installments = plazo;
 
   conekta.Order.create(
     {
       currency: "MXN",
       customer_info: {
-        name: 'Oswaldinho',
-        phone: '1234567890',
-        email: 'os@fixter.org'
+        name: application.name,
+        phone: application.tel,
+        email: application.email
       },
       line_items: [
         {
