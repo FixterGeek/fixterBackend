@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cd74c697-3d15-4eb4-b147-375bd70669a6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/controllers/applications.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/applications.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/payment.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/payment.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -48,11 +48,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controllers/payment.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="792">
-              <caret line="43" column="36" selection-start-line="43" selection-start-column="36" selection-end-line="43" selection-end-column="36" />
+            <state relative-caret-position="269">
+              <caret line="23" column="72" selection-start-line="23" selection-start-column="72" selection-end-line="23" selection-end-column="72" />
             </state>
           </provider>
         </entry>
@@ -98,7 +98,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers/applications.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="437">
@@ -133,8 +133,8 @@
         <option value="$PROJECT_DIR$/controllers/aplications.js" />
         <option value="$PROJECT_DIR$/routes/aplications.js" />
         <option value="$PROJECT_DIR$/routes/payment.js" />
-        <option value="$PROJECT_DIR$/controllers/payment.js" />
         <option value="$PROJECT_DIR$/controllers/applications.js" />
+        <option value="$PROJECT_DIR$/controllers/payment.js" />
       </list>
     </option>
   </component>
@@ -215,12 +215,12 @@
       <workItem from="1549662637611" duration="5666000" />
       <workItem from="1549757832400" duration="2613000" />
       <workItem from="1550015228917" duration="2389000" />
-      <workItem from="1550088187697" duration="3029000" />
+      <workItem from="1550088187697" duration="3164000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25813000" />
+    <option name="totallyTimeSpent" value="25948000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -396,13 +396,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/payment.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="792">
-          <caret line="43" column="36" selection-start-line="43" selection-start-column="36" selection-end-line="43" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routes/applications.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -431,6 +424,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="437">
           <caret line="19" column="31" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/payment.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="23" column="72" selection-start-line="23" selection-start-column="72" selection-end-line="23" selection-end-column="72" />
         </state>
       </provider>
     </entry>
