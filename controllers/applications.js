@@ -1,4 +1,5 @@
 let App = require("../models/App");
+const Course = require("../models/Course");
 //let { generateToken } = require("../helpers/jwt");
 let controller = {};
 
@@ -14,7 +15,8 @@ controller.adminAll = async (req, res) => {
 };
 
 controller.apply = async (req, res) => {
-  // console.log("lol", req.body);
+	const course = await Course.findById(req.body.course);
+	req.body.cost = course ? course.price : 12000;
   req.body.user = req.user._id;
   let exists = await App.findOne({user:req.user._id, course:req.body.course})
   if(exists) return res.json({message:'Ya has aplicado'})

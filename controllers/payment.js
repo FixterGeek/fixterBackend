@@ -13,46 +13,44 @@ controller.pay = (req,res) => {
   //conekta payment
 
   const {conektaToken, plazo, application} = req.body
-  const {user} = req.user
+  const user = req.user
+
+	const chargeObj = {
+		payment_method: {
+			type: "card",
+			token_id: conektaToken
+		}
+	};
+	if(plazo !== "contado") chargeObj.monthly_installment = plazo;
 
   conekta.Order.create(
     {
       currency: "MXN",
       customer_info: {
-        name: user.name,
-        phone: user.phone,
-        email: user.email
+        name: 'Oswaldinho',
+        phone: '1234567890',
+        email: 'os@fixter.org'
       },
       line_items: [
         {
           name: application.course,
-          unit_price: course.cost*100,
+          unit_price: application.cost*100,
           quantity: 1
         }
-      ],      
-      charges: [
-        {
-          payment_method: {
-            type: "card",
-            token_id: conektaToken
-          },
-          monthly_installment:plazo
-        }
-      ]
+      ],
+      charges: [chargeObj]
     },
     function(err, order) {
       if (err) return res.send(err);
-      console.log(order.toObject());
-      return res.send(order.toObject());
+			App.findByIdAndUpdate(application._id, {$set:{paid:true}}, {new:true})
+				.then(application=>{
+					return res.status(200).json({application, order: order.toObject()})
+				}).catch(e=>{
+				return res.status(400).json(e)
+			})
     }
   );
 
-  App.findByIdAndUpdate(application._id, {$set:{paid:true}}, {new:true})
-    .then(application=>{
-      return res.status(200).json(application)
-    }).catch(e=>{
-      return res.status(400).json(e)
-    })
   
 }
 

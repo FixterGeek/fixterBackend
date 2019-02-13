@@ -10,9 +10,9 @@ const logger = require("morgan");
 const path = require("path");
 const passport = require("passport");
 require("./helpers/passport");
+const cors = require('cors');
 const session = require("express-session");
-//var MongoStore = require("connect-mongostore")(express);
-const cors = require("cors");
+
 
 mongoose
   .connect(process.env.DB, { useNewUrlParser: true })
@@ -75,6 +75,7 @@ app.use(
   })
 );
 
+
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
 app.use(express.static(path.join(__dirname, "public")));
@@ -86,12 +87,18 @@ app.locals.title = "Express - Generated with IronGenerator";
 const index = require("./routes/index");
 const mailRoutes = require("./routes/mailRoutes");
 let auth = require("./routes/auth");
+const courses = require("./routes/courses");
+const editions = require("./routes/editions");
 let applications = require("./routes/applications");
 let payment = require("./routes/payment");
+app.use("/", auth);
+app.use("/", index);
 app.use("/pay", payment);
 app.use("/apply", applications);
 app.use("/mailing", mailRoutes);
-app.use("/", auth);
-app.use("/", index);
+app.use("/editions", editions);
+app.use("/courses", courses);
+
+
 
 module.exports = app;
