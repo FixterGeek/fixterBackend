@@ -21,7 +21,7 @@ controller.pay = (req,res) => {
 			token_id: conektaToken
 		}
 	};
-	if(plazo !== "contado") chargeObj.monthly_installments = plazo;
+	if(plazo !== "contado") chargeObj.monthly_installments = parseInt(plazo);
 
   conekta.Order.create(
     {
