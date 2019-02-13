@@ -11,9 +11,19 @@ conekta.locale = 'es'
 
 controller.pay = (req,res) => {
   //conekta payment
+	console.log(req.body)
 
   const {conektaTokenId, plazo, application} = req.body
-  const {user} = req.user
+  const user = req.user
+
+	const chargeObj = {
+		payment_method: {
+			type: "card",
+			token_id: conektaTokenId
+		}
+	};
+
+  if(plazo !== "contado") chargeObj.monthly_installment = plazo;
 
   conekta.Order.create(
     {
@@ -30,15 +40,7 @@ controller.pay = (req,res) => {
           quantity: 1
         }
       ],      
-      charges: [
-        {
-          payment_method: {
-            type: "card",
-            token_id: conektaTokenId
-          },
-          monthly_installment:plazo
-        }
-      ]
+      charges: [chargeObj]
     },
     function(err, order) {
       if (err) return res.send(err);
