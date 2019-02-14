@@ -14,46 +14,51 @@ controller.pay = (req,res) => {
 
   const {conektaToken, plazo, application} = req.body
   const user = req.user
-  console.log(req.body)
-	const chargeObj = {
-		payment_method: {
-			type: "card",
-      token_id: conektaToken,      
-    },    
+
+  App.findById(application._id)
+    .then(app=>{
+      const chargeObj = {
+        payment_method: {
+          type: "card",
+          token_id: conektaToken,      
+        },    
+        
+      };
+      if(plazo !== "contado") chargeObj.payment_method.monthly_installments = parseInt(plazo);
     
-	};
-	if(plazo !== "contado") chargeObj.payment_method.monthly_installments = parseInt(plazo);
-
-  conekta.Order.create(
-    {
-      currency: "MXN",
-      customer_info: {
-        name: application.name,
-        phone: application.tel,
-        email: application.email
-      },      
-      line_items: [
+      conekta.Order.create(
         {
-          name: application.course,
-          unit_price: application.cost*100,
-          quantity: 1,          
+          currency: "MXN",
+          customer_info: {
+            name: app.name,
+            phone: app.tel,
+            email: app.email
+          },      
+          line_items: [
+            {
+              name: app.course,
+              unit_price: app.cost*100,
+              quantity: 1,          
+            }
+          ],
+          charges: [chargeObj]
+        },
+        function(err, order) {
+          if (err) return res.status(400).json(err);
+          App.findByIdAndUpdate(app._id, {$set:{paid:true}}, {new:true})
+            .then(application=>{
+              console.log(order.toObject().charges)
+              return res.status(200).json({application, order: order.toObject()})
+            }).catch(e=>{
+              console.log(e)
+            return res.status(400).json(e)
+          })
         }
-      ],
-      charges: [chargeObj]
-    },
-    function(err, order) {
-      if (err) return res.status(400).json(err);
-			App.findByIdAndUpdate(application._id, {$set:{paid:true}}, {new:true})
-				.then(application=>{
-          console.log(order.toObject().charges)
-					return res.status(200).json({application, order: order.toObject()})
-				}).catch(e=>{
-          console.log(e)
-				return res.status(400).json(e)
-			})
-    }
-  );
-
+      );
+    
+    }).catch(e=>res.status(400).json(e))
+  
+	
   
 }
 
