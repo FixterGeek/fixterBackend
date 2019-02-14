@@ -42,7 +42,7 @@ controller.pay = (req,res) => {
       charges: [chargeObj]
     },
     function(err, order) {
-      if (err) return res.send(err);
+      if (err) return res.status(400).json(err);
 			App.findByIdAndUpdate(application._id, {$set:{paid:true}}, {new:true})
 				.then(application=>{
           console.log(order.toObject().charges)
