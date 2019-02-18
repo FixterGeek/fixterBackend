@@ -26,12 +26,12 @@ controller.createCourse = async (req, res) => {
 };
 
 controller.updateCourse = async (req, res) => {
-	const course = Course.findByIdAndUpdate(req.params.id, req.body, {new: true});
+	const course = await Course.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true});
 	res.status(200).json(course);
 };
 
 controller.deleteCourse = async (req, res) => {
-	const course = Course.findByIdAndRemove(req.params.id);
+	const course = await Course.findByIdAndRemove(req.params.id);
 	res.status(200).json(course);
 };
 
