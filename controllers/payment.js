@@ -35,6 +35,8 @@ controller.pay = (req,res) => {
         discount = elapp.cost*.10
       }else if((plazo==='contado' || plazo !=='contado') && cupon){
         discount = elapp.cost *cupon.value/100            
+      }else{
+        discount = 0
       }
       
       if(plazo !== "contado") chargeObj.payment_method.monthly_installments = parseInt(plazo);
