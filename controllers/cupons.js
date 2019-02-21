@@ -10,8 +10,10 @@ controller.getCupons = async (req, res) => {
 controller.getCupons = async (req, res) => {	
   const {cupon} = req.query
   if(cupon){
-    cupon = await Cupon.findOne({name:cupon,users:{$in:req.user._id}, valid:true});
-    res.status(200).json(cupon)
+    console.log(req.user._id)
+    let elcupon = await Cupon.findOne({users:req.user._id});
+    console.log(elcupon)
+    res.status(200).json(elcupon)
   }else{
     cupons = await Cupon.find();
 	  res.status(200).json({cupons})

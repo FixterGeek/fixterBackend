@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const controller = require("../controllers/cupons");
+const { verifyToken } = require("../helpers/jwt");
 
 function tryCatch(fn) {
 	return function(req, res, next) {
@@ -8,13 +9,13 @@ function tryCatch(fn) {
 	};
 }
 
-router.get("/", tryCatch(controller.getCupons) );
+router.get("/", verifyToken, tryCatch(controller.getCupons) );
 
 
-router.post("/", tryCatch(controller.createCupon) );
+router.post("/",verifyToken, tryCatch(controller.createCupon) );
 
-router.patch("/:id", tryCatch(controller.updateCupon) );
+router.patch("/:id",verifyToken, tryCatch(controller.updateCupon) );
 
-router.delete("/:id", tryCatch(controller.deleteCupon) );
+router.delete("/:id",verifyToken, tryCatch(controller.deleteCupon) );
 
 module.exports = router;
