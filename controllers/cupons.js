@@ -9,11 +9,10 @@ controller.getCupons = async (req, res) => {
 
 controller.getCupons = async (req, res) => {	
   const {cupon} = req.query
-  if(cupon){
-    console.log(req.user._id)
-    let elcupon = await Cupon.findOne({users:req.user._id});
-    console.log(elcupon)
-    res.status(200).json(elcupon)
+  if(cupon){    
+    let elcupon = await Cupon.findOne({users:req.user._id});    
+    if(elcupon)res.status(200).json(elcupon)
+    else res.status(404).json({message:'Cupón no válido'})
   }else{
     cupons = await Cupon.find();
 	  res.status(200).json({cupons})

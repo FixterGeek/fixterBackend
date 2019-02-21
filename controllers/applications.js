@@ -11,7 +11,7 @@ controller.self = async (req,res)=>{
 
 controller.adminAll = async (req, res) => {
   let apps = await App.find();
-  res.status(200).json(apps);
+  res.status(200).json(apps);  
 };
 
 controller.apply = async (req, res) => {
