@@ -13,7 +13,7 @@ conekta.locale = 'es'
 controller.pay = (req,res) => {
   //conekta payment
 
-  const {conektaToken, plazo, application} = req.body
+  const {conektaToken, plazo, application, cupon} = req.body
   const user = req.user   
   
   
@@ -27,6 +27,16 @@ controller.pay = (req,res) => {
         },    
         
       };
+
+      //discounts
+      let discount = 0
+      elapp.cost = elapp.cost*100
+      if(plazo==='contado' && !cupon) {
+        discount = elapp.cost*.10
+      }else if((plazo==='contado' || plazo !=='contado') && cupon){
+        discount = elapp.cost *cupon.value/100            
+      }
+      
       if(plazo !== "contado") chargeObj.payment_method.monthly_installments = parseInt(plazo);
       const conektaObject = 
       {
@@ -39,7 +49,7 @@ controller.pay = (req,res) => {
         line_items: [
           {
             name: elapp.course,
-            unit_price: elapp.cost*100,
+            unit_price: elapp.cost-discount,
             quantity: 1,          
           }
         ],
