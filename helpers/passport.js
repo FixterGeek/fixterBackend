@@ -27,7 +27,7 @@ passport.use(
 				})
 				.then(u => {
 					//mail de bienvenida
-					welcomeMail(u);
+					if (u) welcomeMail(u);
 					done(null, u);
 				})
 				.catch(e => done(e));
@@ -60,7 +60,7 @@ passport.use(
 				})
 				.then(u => {
 					//mail de bienvenida
-					welcomeMail(u);
+					if (u) welcomeMail(u);
 					done(null, u);
 				})
 				.catch(e => done(e));
