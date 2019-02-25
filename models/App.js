@@ -19,7 +19,10 @@ const appSchema = new Schema(
       type: String,
       required: true
     },
-    course: String,
+    course: {
+    	type: Schema.Types.ObjectId,
+			ref: "Course"
+		},
     comments: String,
     paid:{
       type:Boolean,

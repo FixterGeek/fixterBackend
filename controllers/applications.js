@@ -10,7 +10,7 @@ controller.self = async (req,res)=>{
 }
 
 controller.adminAll = async (req, res) => {
-  let apps = await App.find();
+  let apps = await App.find().populate("course");
   res.status(200).json(apps);  
 };
 
