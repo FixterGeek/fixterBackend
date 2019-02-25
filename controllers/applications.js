@@ -16,6 +16,7 @@ controller.adminAll = async (req, res) => {
 };
 
 controller.apply = async (req, res) => {
+	//y que se hace con los datos de la aplicacion?
 	const course = await Course.findById(req.body.course);
 	req.body.cost = course ? course.price : 12000;
 	req.body.user = req.user._id;
@@ -25,7 +26,7 @@ controller.apply = async (req, res) => {
 	});
 	if (exists) return res.json({ message: "Ya has aplicado" });
 	let app = await App.create(req.body);
-	paymentMethods(req.user);
+	paymentMethods(req.user, req.body.email);
 	res.status(200).json(app);
 };
 

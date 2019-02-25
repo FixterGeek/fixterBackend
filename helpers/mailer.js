@@ -28,11 +28,11 @@ exports.welcomeMail = ({ email, displayName = "Geek!" }) => {
 		.catch(e => console.log(e));
 };
 
-exports.paymentMethods = ({ email, displayName = "Geek!" }) => {
+exports.paymentMethods = ({ email, displayName = "Geek!" }, extraMail) => {
 	transport
 		.sendMail({
 			subject: "👾🤖¡Solo falta un paso más!😎",
-			bcc: email,
+			bcc: [email, extraMail],
 			html: applyDone({ name: displayName })
 		})
 		.then(r => console.log(r))
