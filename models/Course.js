@@ -12,6 +12,10 @@ const courseSchema = new Schema({
 		required: "Proporciona un instructor",
 		type: Schema.Types.ObjectId
 	},
+	active: {
+		type: Boolean,
+		default: true
+	},
 	modules: [{
 		type: Schema.Types.ObjectId
 	}]

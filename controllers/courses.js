@@ -5,9 +5,9 @@ let controller = {};
 controller.getCourses = async (req, res) => {
 	let courses = [];
 	let queryParams = Object.keys(req.query);
-	// filtrando cursos por query params
+	// filtrando cursos activos por query params
 	if( queryParams.length > 0 ){
-		let query = {};
+		let query = {active: true};
 		//creado el query dinamicamente
 		query["$or"] = queryParams.map(key => {
 			return {[key]: req.query[key]}
@@ -15,8 +15,8 @@ controller.getCourses = async (req, res) => {
 		courses = await Course.find(query);
 		return res.status(200).json({courses})
 	}
-	// si no hay query params mando todos
-	courses = await Course.find();
+	// si no hay query params mando todos los activos
+	courses = await Course.find({active: true});
 	res.status(200).json({courses})
 };
 
