@@ -2,23 +2,41 @@ const Cupon = require("../models/Cupon");
 let controller = {};
 
 
-controller.getCupons = async (req, res) => {	
+controller.getCupons = async (req, res) => {
 	cupons = await Cupon.find();
-	res.status(200).json({cupons})
+	res.status(200).json({ cupons })
 };
 
-controller.getCupons = async (req, res) => {	
-  const {cupon} = req.query
-  if(cupon){    
-    let elcupon = await Cupon.findOne({users:req.user._id});    
-    if(elcupon)res.status(200).json(elcupon)
-    else res.status(404).json({message:'Cupón no válido'})
-  }else{
-    cupons = await Cupon.find();
-	  res.status(200).json({cupons})
-  }
-	
-};
+controller.apply = async (req, res) => {
+	let { cupon: name, courseId } = req.body
+	let cupon = name ? await Cupon.findOne({ name }) : null;
+	//no valid
+	if (!cupon.valid) return res.status(406).json({ message: "Cupón no válido" })
+	// sold out
+	if (cupon.quantity < 1) return res.status(409).json({ message: "Cupón agotado" })
+	// used
+
+	//used = {
+	//	[userId]:{
+	//		[courseID]:true
+	//}
+
+	if (cupon.used[req.user._id]) return res.status(423).json({ message: "Cúpon usado" })
+	//applying
+	//marcar como usado sólo si pagan
+	/*
+	cupon.used = {
+		...cupon.used,
+		[req.user._id]: { [courseId]: true }
+	}
+	cupon.quantity--
+	await cupon.save()
+	**/
+
+	return res.status(202).json(cupon)
+}
+
+
 
 controller.createCupon = async (req, res) => {
 	const cupon = await Cupon.create(req.body);
@@ -26,7 +44,7 @@ controller.createCupon = async (req, res) => {
 };
 
 controller.updateCupon = async (req, res) => {
-	const cupon = await Cupon.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true});
+	const cupon = await Cupon.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true });
 	res.status(200).json(cupon);
 };
 

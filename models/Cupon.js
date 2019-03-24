@@ -2,25 +2,30 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const cuponSchema = new Schema({
-  name:{
-    type:String,
-    required:true,
-    unique:true
+  name: {
+    type: String,
+    required: true,
+    unique: true
   },
-  value:{
-    type:Number,
-    required:true
+  quantity: {
+    type: Number,
+    required: true,
+    default: 20
   },
-  valid:{
-    type:Boolean,
-    default:true
+  value: {
+    type: Number,
+    required: true
   },
-  users:[{
-    type:Schema.Types.ObjectId,
-    ref:'User'
-  }]
-},{
-  timestamps:true
-})
+  valid: {
+    type: Boolean,
+    default: true
+  },
+  used: {
+    type: Object,
+    default: { 0: true }
+  }
+}, {
+    timestamps: true
+  })
 
 module.exports = mongoose.model('Cupon', cuponSchema)
