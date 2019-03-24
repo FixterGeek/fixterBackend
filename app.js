@@ -92,14 +92,14 @@ const editions = require("./routes/editions");
 let applications = require("./routes/applications");
 let payment = require("./routes/payment");
 const cupons = require("./routes/cupons");
-app.use("/", auth);
-app.use("/", index);
 app.use("/pay", payment);
 app.use("/apply", applications);
 app.use("/mailing", mailRoutes);
 app.use("/editions", editions);
 app.use("/courses", courses);
 app.use("/cupons", cupons);
+app.use("/", auth);
+app.use("/", index);
 
 
 

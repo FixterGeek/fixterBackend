@@ -9,13 +9,22 @@ function tryCatch(fn) {
 	};
 }
 
+function checkIfAdmin(req, res, next) {
+	if (req.user.role !== "ADMIN") return res.status(301).json({ message: "No tienes authorización" })
+	next()
+}
+
 router.post("/apply", verifyToken, tryCatch(controller.apply));
 
+router.patch("/:id", verifyToken, checkIfAdmin, tryCatch(controller.updateCupon));
 
-router.post("/", verifyToken, tryCatch(controller.createCupon));
+router.delete("/:id", verifyToken, checkIfAdmin, tryCatch(controller.deleteCupon));
 
-router.patch("/:id", verifyToken, tryCatch(controller.updateCupon));
+router.post("/", verifyToken, checkIfAdmin, tryCatch(controller.createCupon));
 
-router.delete("/:id", verifyToken, tryCatch(controller.deleteCupon));
+router.get("/", verifyToken, checkIfAdmin, tryCatch(controller.getCupons));
+
+
+
 
 module.exports = router;

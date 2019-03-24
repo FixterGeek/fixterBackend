@@ -4,7 +4,7 @@ let controller = {};
 
 controller.getCupons = async (req, res) => {
 	cupons = await Cupon.find();
-	res.status(200).json({ cupons })
+	res.status(200).json(cupons)
 };
 
 controller.apply = async (req, res) => {
