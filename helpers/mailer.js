@@ -43,7 +43,7 @@ exports.paymentMethods = ({ email, displayName = "Geek!" }, extraMail) => {
 		.catch(e => console.log(e));
 };
 
-exports.contactFormReceived = ({ email, displayName = "Geek!", text }, extraMail) => {
+exports.contactFormReceived = ({ email, displayName = "Geek!", text, tel }, extraMail) => {
 	transport
 		.sendMail({
 			subject: "👾🤖¡Gracias por contactarnos!😎",
@@ -59,6 +59,7 @@ exports.contactFormReceived = ({ email, displayName = "Geek!", text }, extraMail
 				html: `
 				<h2> Fecha: ${new Date()} </h2>
 					<h2> Nombre: ${displayName} </h2>
+					<h2> Teléfono: ${tel} </h2>
 					<h2> Email: ${email} </h2>
 					<h2> Mensaje: ${text} </h2>
 					
