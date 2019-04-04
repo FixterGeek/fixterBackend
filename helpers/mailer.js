@@ -55,7 +55,7 @@ exports.contactFormReceived = ({ email, displayName = "Geek!", text }, extraMail
 			return transport
 			.sendMail({
 				subject: "👾🤖¡Alguien nos ha contactado!😎",
-				bcc: ["contacto@fixter.org"],
+				bcc: ["contacto@fixter.org", "brenda@fixter.org"],
 				html: `
 				<h2> Fecha: ${new Date()} </h2>
 					<h2> Nombre: ${displayName} </h2>
