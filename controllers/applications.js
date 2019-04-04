@@ -6,7 +6,7 @@ let controller = {};
 
 controller.self = async (req, res) => {
 	const { _id } = req.user;
-	let apps = await App.find({ user: _id });
+	let apps = await App.find({ user: _id }).populate('course');
 	res.status(200).json(apps);
 };
 
