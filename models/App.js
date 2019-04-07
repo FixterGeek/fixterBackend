@@ -21,7 +21,7 @@ const appSchema = new Schema(
     },
     course: {
     	type: Schema.Types.ObjectId,
-			ref: "Course"
+			ref: "Edition"
 		},
     comments: String,
     paid:{
