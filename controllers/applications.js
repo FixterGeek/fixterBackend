@@ -1,5 +1,5 @@
 let App = require("../models/App");
-const Course = require("../models/Course");
+const Edition = require("../models/Edition");
 //let { generateToken } = require("../helpers/jwt");
 let { paymentMethods } = require("../helpers/mailer");
 let controller = {};
@@ -17,7 +17,7 @@ controller.adminAll = async (req, res) => {
 
 controller.apply = async (req, res) => {
 	//y que se hace con los datos de la aplicacion?
-	const course = await Course.findById(req.body.course);
+	const course = await Edition.findById(req.body.course);
 	req.body.cost = course ? course.price : 12000;
 	req.body.user = req.user._id;
 	let exists = await App.findOne({
