@@ -26,12 +26,12 @@ controller.createEdition = async (req, res) => {
 };
 
 controller.updateEdition = async (req, res) => {
-	const edition = Edition.findByIdAndUpdate(req.params.id, req.body, {new: true});
+	const edition = await Edition.findByIdAndUpdate(req.params.id, req.body, {new: true});
 	res.status(200).json(edition);
 };
 
 controller.deleteEdition = async (req, res) => {
-	const edition = Edition.findByIdAndRemove(req.params.id);
+	const edition = await Edition.findByIdAndRemove(req.params.id);
 	res.status(200).json(edition);
 };
 
