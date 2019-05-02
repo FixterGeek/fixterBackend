@@ -6,7 +6,7 @@ let controller = {};
 
 
 
-conekta.api_key = process.env.ENV !== 'production' ? process.env.CONEKTA_KEY_DEV : process.env.CONEKTA_KEY
+conekta.api_key = process.env.ENV === 'production' ? process.env.CONEKTA_KEY : process.env.CONEKTA_KEY_DEV
 //conekta.api_key = process.env.CONEKTA_KEY_DEV
 conekta.api_version = '2.0.0';
 conekta.locale = 'es'
