@@ -11,5 +11,6 @@ function tryCatch(fn) {
 }
 
 router.post("/", verifyToken, controller.pay);
+router.post("/bootcamp/online", verifyToken, controller.bootcamp);
 
 module.exports = router;

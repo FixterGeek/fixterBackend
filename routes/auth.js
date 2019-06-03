@@ -3,12 +3,19 @@ let router = express.Router();
 let controller = require("../controllers/auth");
 //middlewares
 let passport = require("passport");
+let { verifyToken } = require("../helpers/jwt");
 
 function tryCatch(fn) {
   return function(req, res, next) {
     return fn(req, res).catch(e => next(e));
   };
 }
+
+router.get(
+  '/self',
+  verifyToken,
+  tryCatch(controller.self)
+)
 
 router.post(
   "/login",

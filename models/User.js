@@ -17,7 +17,9 @@ let userSchema = new Schema(
     facebookId: String,
     googleId: String,
     displayName: String,
-    photoURL: String
+    photoURL: String,
+    enrolled:Boolean,
+    country:String
   },
   {
     timestamps: true

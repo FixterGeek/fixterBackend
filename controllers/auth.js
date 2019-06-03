@@ -3,6 +3,11 @@ let { generateToken } = require("../helpers/jwt");
 let { welcomeMail } = require("../helpers/mailer");
 let controller = {};
 
+controller.self = async (req,res) => {
+	let {user} = req
+	return res.status(200).send(user)
+}
+
 controller.login = async (req, res) => {
 	//console.log(req.user);
 	let token = generateToken(req.user);
