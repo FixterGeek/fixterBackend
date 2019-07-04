@@ -68,3 +68,36 @@ exports.contactFormReceived = ({ email, displayName = "Geek!", text, tel }, extr
 		})
 		.catch(e => console.log(e));
 };
+
+exports.contactFormArango = ({ email, name, budget, tel, numPeople, date  }) => {
+	transport
+		.sendMail({
+			subject: "👾🤖¡Tienes un nuevo mensaje!😎",
+			bcc: ["brenda@fixter.org"],
+			html: `<h3>¡Tienes un nuevo mensaje!</h3>
+			<p> Nombre: ${name} </p>
+			<p> Correo: ${email} </p>
+			<p> Teléfono: ${tel}  </p>
+			<p> Número de personas:  ${numPeople} </p>
+			<p> Presupuesto por persona: ${budget} </p>
+			<p> Fecha: ${date} </p>
+			`
+		})
+		.then(r => {
+			console.log(r)
+			//return transport
+			// .sendMail({
+			// 	subject: "👾🤖¡Alguien nos ha contactado!😎",
+			// 	bcc: ["contacto@fixter.org", "brenda@fixter.org"],
+			// 	html: `
+			// 	<h2> Fecha: ${new Date()} </h2>
+			// 		<h2> Nombre: ${displayName} </h2>
+			// 		<h2> Teléfono: ${tel} </h2>
+			// 		<h2> Email: ${email} </h2>
+			// 		<h2> Mensaje: ${text} </h2>
+					
+			// 	`
+			// })
+		})
+		.catch(e => console.log(e));
+};
