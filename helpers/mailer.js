@@ -73,7 +73,7 @@ exports.contactFormArango = ({ email, name, budget, tel, numPeople, date  }) => 
 	transport
 		.sendMail({
 			subject: "👾🤖¡Tienes un nuevo mensaje!😎",
-			bcc: ["brenda@fixter.org"],
+			bcc: ["eventos@arangorestaurante.com"],
 			html: `<h3>¡Tienes un nuevo mensaje!</h3>
 			<p> Nombre: ${name} </p>
 			<p> Correo: ${email} </p>
