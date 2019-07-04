@@ -3,7 +3,7 @@ const router = express.Router()
 const {contactFormReceived, contactFormArango} = require('../helpers/mailer')
 
 router.post('/arango/contacto', (req,res,next)=>{
-  if(req.body.token !== 'cocinaDeRaices') return
+  if(req.body.token !== 'cocinaDeRaices') return  res.status(403).send({message: "Forbiden"})
   contactFormArango(req.body)
   res.status(200).send({message: "Sending"})
 })
