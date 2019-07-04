@@ -70,7 +70,9 @@ app.use(
     origin: [
       "http://localhost:3001",
       "https://fixter.camp",
-      "https://www.fixter.camp"
+      "https://www.fixter.camp",
+      "https://arangorestaurante.com",
+      "https://www.arangorestaurante.com"
     ]
   })
 );
