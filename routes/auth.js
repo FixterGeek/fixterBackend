@@ -6,23 +6,29 @@ let passport = require("passport");
 let { verifyToken } = require("../helpers/jwt");
 
 function tryCatch(fn) {
-  return function(req, res, next) {
+  return function (req, res, next) {
     return fn(req, res).catch(e => next(e));
   };
 }
-
+// self action
 router.get(
   '/self',
   verifyToken,
   tryCatch(controller.self)
 )
 
+router.patch('/self',
+  verifyToken,
+  tryCatch(controller.update)
+)
+
+//login
 router.post(
   "/login",
   passport.authenticate("local"),
   tryCatch(controller.login)
 );
-
+// sgnup
 router.post("/signup", tryCatch(controller.signup));
 router.post(
   "/login/facebook/token",

@@ -3,6 +3,12 @@ let { generateToken } = require("../helpers/jwt");
 let { welcomeMail } = require("../helpers/mailer");
 let controller = {};
 
+controller.update = async (req, res) => {
+	let { user, body } = req
+	let self = await User.findByIdAndUpdate(user._id, body, { new: true })
+	return res.status(200).send(self)
+}
+
 controller.self = async (req, res) => {
 	let { user } = req
 	return res.status(200).send(user)
@@ -19,7 +25,7 @@ controller.signup = async (req, res) => {
 	if (exists)
 		return res
 			.status(401)
-			.json({ message: "Este email ya existe en el sistema" });
+			.json({ message: "Ya hay una cuenta relacionada a este email" });
 	req.body.username = req.body.email
 	let user = await User.register(req.body, req.body.password);
 	//mail de bienvenida
