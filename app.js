@@ -72,7 +72,8 @@ app.use(
       "https://fixter.camp",
       "https://www.fixter.camp",
       "https://arangorestaurante.com",
-      "https://www.arangorestaurante.com"
+      "https://www.arangorestaurante.com",
+      "http://localhost:3000" // solo development
     ]
   })
 );

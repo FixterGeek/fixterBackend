@@ -10,7 +10,7 @@ let userSchema = new Schema(
     },
     role: {
       type: String,
-      enum: ["ADMIN", "GUEST"],
+      enum: ["ADMIN", "GUEST", "PREMIUM", "STUDENT"],
       default: "GUEST"
     },
     email: String,
@@ -18,8 +18,9 @@ let userSchema = new Schema(
     googleId: String,
     displayName: String,
     photoURL: String,
-    enrolled:Boolean,
-    country:String
+    enrolled: Boolean,
+    country: String,
+    city: String
   },
   {
     timestamps: true
