@@ -5,7 +5,7 @@ let controller = {};
 
 controller.update = async (req, res) => {
 	let { user, body } = req
-	let self = await User.findOneAndUpdate({ _id: user._id }, body, { new: true, projection: { hash: 0, salt: 0 } })
+	let self = await User.findByIdAndUpdate(user._id, body, { new: true, projection: { hash: 0, salt: 0 } })
 	return res.status(200).send(self)
 }
 
@@ -17,7 +17,8 @@ controller.self = async (req, res) => {
 controller.login = async (req, res) => {
 	//console.log(req.user);
 	let token = generateToken(req.user);
-	res.status(200).send({ user: req.user, token });
+	let user = await User.findById(req.user._id, { projection: { hash: 0, salt: 0 } })
+	res.status(200).send({ user, token });
 };
 
 controller.signup = async (req, res) => {
