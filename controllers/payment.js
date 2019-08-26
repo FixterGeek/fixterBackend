@@ -1,6 +1,9 @@
 let App = require("../models/App");
 let User = require('../models/User')
 let Cupon = require("../models/Cupon")
+let Student = require('../models/Student')
+let Bootcamp = require('../models/Bootcamp')
+let Order = require('../models/Order')
 //let { generateToken } = require("../helpers/jwt");
 const conekta = require('conekta')
 let controller = {};
@@ -21,26 +24,29 @@ function useCupon(cupon, used) {
     .then(cu => console.log("edited?", cu))
 }
 
-controller.bootcamp = (req,res) => {
-  const { conektaToken, plazo, country, phone } = req.body
+controller.bootcamp = (req, res) => {
+  const {
+    tel,
+    fullName,
+    email,
+    tokenId,
+    bootcampId
+  } = req.body
   const user = req.user
-
   const chargeObj = {
     payment_method: {
       type: "card",
-      token_id: conektaToken,
-    },
-
+      token_id: tokenId,
+    }
   };
-
-  if (plazo !== "contado") chargeObj.payment_method.monthly_installments = parseInt(plazo);
+  //if (plazo !== "contado") chargeObj.payment_method.monthly_installments = parseInt(plazo);
   const conektaObject =
   {
     currency: "MXN",
     customer_info: {
-      name: user.username,
-      phone,
-      email: user.email,
+      name: fullName,
+      phone: tel,
+      email: email,
     },
     line_items: [
       {
@@ -58,19 +64,44 @@ controller.bootcamp = (req,res) => {
         console.log('conektaerror', err)
         return res.status(400).json(err);
       }
-      User.findByIdAndUpdate(user._id, { $set: { enrolled: true, country } }, { new: true })
-        .then(u => {
-          //console.log(order.toObject())
-          //cancelamos el cupon
-          //useCupon(cupon, used)
-          //
-          return res.status(200).json({ user:u, order: order.toObject() })
-        }).catch(e => {
+      // create order
+      Order.create({
+        products: [{ model: "Bootcamp", id: bootcampId }],
+        conektaId: order.id,
+        user: user._id,
+        total: 1000,
+        paid: true
+      })
+        .then(o => {
+          // create student
+          return Student.create({
+            bootcamp: bootcampId,
+            user: user._id,
+            name: fullName,
+            tel,
+            email,
+            paid: true,
+            order: o._id
+          })
+        })
+        .then(s => {
+          // create enroll en user
+          // create enroll en bootcamp
+          return Promise.all([
+            User.findByIdAndUpdate(user._id, { $push: { bootcamps: bootcampId } }, { new: true }),
+            Bootcamp.findByIdAndUpdate(bootcampId, { $push: { students: s._id } }, { new: true })
+          ])
+        })
+        .then(([u, b]) => {
+          return res.status(200).json(u)
+        })
+        .catch(e => {
           console.log(e)
           return res.status(400).json(e)
         })
+
     }
-  );
+  ); // conecta create
 
 }
 

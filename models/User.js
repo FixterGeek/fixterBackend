@@ -21,7 +21,7 @@ let userSchema = new Schema(
     enrolled: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Studet"
+        ref: "Student"
       }
     ],
     bootcamps: [{
