@@ -64,11 +64,11 @@ controller.bootcamp = (req, res) => {
         console.log('conektaerror', err)
         return res.status(400).json(err);
       }
-      console.log('conekta order', order)
+      //console.log('conekta order', order)
       // create order
       Order.create({
         products: [{ model: "Bootcamp", id: bootcampId }],
-        conektaId: order.id,
+        conektaId: order._id,
         user: user._id,
         total: 1000,
         paid: true
