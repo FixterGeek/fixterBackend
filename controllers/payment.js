@@ -88,12 +88,12 @@ controller.bootcamp = (req, res) => {
         .then(s => {
           // create enroll en user
           // create enroll en bootcamp
-          return Promise.all([
-            Bootcamp.findByIdAndUpdate(bootcampId, { $push: { students: s._id } }, { new: true }),
-            User.findByIdAndUpdate(user._id, { $push: { bootcamps: bootcampId } }, { new: true }).populate('bootcamps')
-          ])
+          return Bootcamp.findByIdAndUpdate(bootcampId, { $push: { students: s._id } }, { new: true })
         })
-        .then(([u, b]) => {
+        .then(b => {
+          return User.findByIdAndUpdate(user._id, { $push: { bootcamps: bootcampId } }, { new: true }).populate('bootcamps')
+        })
+        .then(u => {
           return res.status(200).json(u)
         })
         .catch(e => {
