@@ -5,7 +5,7 @@ let controller = {};
 
 controller.update = async (req, res) => {
 	let { user, body } = req
-	let self = await User.findByIdAndUpdate(user._id, body, { new: true })
+	let self = await User.findByIdAndUpdate(user._id, body, { new: true, projection: { hash: 0, salt: 0 } })
 	return res.status(200).send(self)
 }
 
