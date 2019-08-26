@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const bootCampSchema = new Schema({
+  current: Boolean,
   photoURL: String,
   startdate: Date,
   endDate: Date,
@@ -15,7 +16,7 @@ const bootCampSchema = new Schema({
   students: [
     {
       type: Schema.Types.ObjectId,
-      ref: "User"
+      ref: "Student"
     }
   ],
   instructors: [{

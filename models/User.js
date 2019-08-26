@@ -18,7 +18,16 @@ let userSchema = new Schema(
     googleId: String,
     displayName: String,
     photoURL: String,
-    enrolled: Boolean,
+    enrolled: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Studet"
+      }
+    ],
+    bootcamps: [{
+      type: Schema.Types.ObjectId,
+      ref: "Bootcamp"
+    }],
     country: String,
     city: String
   },
