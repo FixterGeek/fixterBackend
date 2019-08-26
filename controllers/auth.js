@@ -17,7 +17,7 @@ controller.self = async (req, res) => {
 controller.login = async (req, res) => {
 	//console.log(req.user);
 	let token = generateToken(req.user);
-	let user = await User.findById(req.user._id, { projection: { hash: 0, salt: 0 } })
+	let user = await User.findById(req.user._id, { hash: 0, salt: 0 })
 	res.status(200).send({ user, token });
 };
 
