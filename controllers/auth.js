@@ -1,7 +1,21 @@
 let User = require("../models/User");
 let { generateToken } = require("../helpers/jwt");
-let { welcomeMail } = require("../helpers/mailer");
+let { welcomeMail, sendPasswordChanged } = require("../helpers/mailer");
 let controller = {};
+let symbols = ["@", "H", ")", "=", "¿", ".", "*", "¡"]
+
+controller.recovery = async (req, res) => {
+	let { email } = req.body
+	let user = await User.findOne({ email })
+	if (!user) return res.status(401).json({ message: "No existe una cuenta con este correo", email })
+	let newPass = ''
+	symbols.forEach(s => newPass = newPass + Math.floor(Math.random() * 100) + symbols[Math.floor(Math.random() * 7)])
+	await user.setPassword(newPass)
+	user.changePass = true
+	await user.save()
+	sendPasswordChanged(newPass, email, user.displayName)
+	return res.status(200).json({ message: "Password provisional asignado" })
+}
 
 controller.update = async (req, res) => {
 	let { user, body } = req

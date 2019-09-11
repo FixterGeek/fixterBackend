@@ -53,10 +53,10 @@ exports.contactFormReceived = ({ email, displayName = "Geek!", text, tel }, extr
 		.then(r => {
 			console.log(r)
 			return transport
-			.sendMail({
-				subject: "👾🤖¡Alguien nos ha contactado!😎",
-				bcc: ["contacto@fixter.org", "brenda@fixter.org"],
-				html: `
+				.sendMail({
+					subject: "👾🤖¡Alguien nos ha contactado!😎",
+					bcc: ["contacto@fixter.org", "brenda@fixter.org"],
+					html: `
 				<h2> Fecha: ${new Date()} </h2>
 					<h2> Nombre: ${displayName} </h2>
 					<h2> Teléfono: ${tel} </h2>
@@ -64,12 +64,12 @@ exports.contactFormReceived = ({ email, displayName = "Geek!", text, tel }, extr
 					<h2> Mensaje: ${text} </h2>
 					
 				`
-			})
+				})
 		})
 		.catch(e => console.log(e));
 };
 
-exports.contactFormArango = ({ email, name, budget, tel, numPeople, date  }) => {
+exports.contactFormArango = ({ email, name, budget, tel, numPeople, date }) => {
 	transport
 		.sendMail({
 			subject: "👾🤖¡Tienes un nuevo mensaje!😎",
@@ -95,9 +95,27 @@ exports.contactFormArango = ({ email, name, budget, tel, numPeople, date  }) => 
 			// 		<h2> Teléfono: ${tel} </h2>
 			// 		<h2> Email: ${email} </h2>
 			// 		<h2> Mensaje: ${text} </h2>
-					
+
 			// 	`
 			// })
 		})
 		.catch(e => console.log(e));
 };
+
+exports.sendPasswordChanged = (password, email, name) => {
+	return transport.sendMail({
+		from: "fixtermailer@gmail.com",
+		subject: "👾🤖 Recupera tu cuenta! ",
+		bcc: [email],
+		html: `
+			<h2> Tu password provisional es: ${password} </h2>
+			<p> Puedes usarlo para acceder a la plataforma, pero no olvides cambiarlo inmediatamente por uno nuevo. </p>
+			<a href="https://www.fixter.camp">Entra aquí</a>
+			<p>Nos vemos ;)</p>
+		`
+	})
+		.then(r => {
+			console.log(r)
+		})
+		.catch(e => console.log(e));
+}

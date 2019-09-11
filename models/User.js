@@ -4,6 +4,10 @@ let passportLocalMongoose = require("passport-local-mongoose");
 
 let userSchema = new Schema(
   {
+    changePass: {
+      type: Boolean,
+      default: false
+    },
     username: {
       type: String,
       required: true

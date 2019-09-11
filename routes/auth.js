@@ -28,6 +28,11 @@ router.post(
   passport.authenticate("local"),
   tryCatch(controller.login)
 );
+// recovery
+router.post('/recovery',
+  tryCatch(controller.recovery)
+)
+
 // sgnup
 router.post("/signup", tryCatch(controller.signup));
 router.post(
