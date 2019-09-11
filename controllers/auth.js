@@ -4,12 +4,11 @@ let { welcomeMail, sendPasswordChanged } = require("../helpers/mailer");
 let controller = {};
 
 controller.changePassword = async (req, res) => {
-	let { user } = req
 	let { password } = req.body
-	await user.setPassword(password)
-	user.changePass = false
-	await user.save()
-	let user = await User.findById(user._id, { hash: 0, salt: 0 }).populate('bootcamps')
+	await req.user.setPassword(password)
+	req.user.changePass = false
+	await req.user.save()
+	let user = await User.findById(req.user._id, { hash: 0, salt: 0 }).populate('bootcamps')
 	return res.status(200).json(user)
 }
 
