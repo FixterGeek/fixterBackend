@@ -32,6 +32,10 @@ router.post(
 router.post('/recovery',
   tryCatch(controller.recovery)
 )
+router.post('/change-password',
+  verifyToken,
+  tryCatch(controller.changePassword)
+)
 
 // sgnup
 router.post("/signup", tryCatch(controller.signup));
