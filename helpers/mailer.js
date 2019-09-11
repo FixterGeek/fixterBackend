@@ -110,7 +110,7 @@ exports.sendPasswordChanged = (password, email, name) => {
 		html: `
 			<h2> Tu password provisional es: ${password} </h2>
 			<p> Puedes usarlo para acceder a la plataforma, pero no olvides cambiarlo inmediatamente por uno nuevo. </p>
-			<a href="https://www.fixter.camp">Entra aquí</a>
+			<a href="https://www.fixter.camp/profile">Entra aquí</a>
 			<p>Nos vemos ;)</p>
 		`
 	})
