@@ -96,6 +96,8 @@ const editions = require("./routes/editions");
 let applications = require("./routes/applications");
 let payment = require("./routes/payment");
 const cupons = require("./routes/cupons");
+const admin = require("./routes/admin");
+app.use("/admin", admin);
 app.use("/pay", payment);
 app.use("/apply", applications);
 app.use("/mailing", mailRoutes);
