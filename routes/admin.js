@@ -17,7 +17,7 @@ function checkIfAdmin(req, res, next) {
 router.get("/users",
   verifyToken,
   checkIfAdmin,
-  controller.getUsers);
+  tryCatch(controller.getUsers))
 
 // router.get("/:id", controller.getAplication );
 
