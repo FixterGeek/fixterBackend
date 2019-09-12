@@ -3,7 +3,7 @@ let controller = {};
 
 
 controller.getUsers = async (req, res) => {
-  let items = await Model.find()
+  let items = await Model.find().populate('bootcamps')
   return res.status(200).json(items)
 };
 
