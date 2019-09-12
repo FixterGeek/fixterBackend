@@ -52,4 +52,4 @@ controller.getUsers = (req, res) => {
 //     })
 // };
 
-// module.exports = controller;
+module.exports = controller;

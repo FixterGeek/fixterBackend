@@ -14,7 +14,8 @@ function checkIfAdmin(req, res, next) {
   next()
 }
 
-router.get("/users",
+router.get(
+  '/users',
   verifyToken,
   checkIfAdmin,
   tryCatch(controller.getUsers))
