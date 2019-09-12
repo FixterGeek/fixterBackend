@@ -18,7 +18,8 @@ router.get(
   '/users',
   verifyToken,
   checkIfAdmin,
-  tryCatch(controller.getUsers))
+  tryCatch(controller.getUsers)
+)
 
 // router.get("/:id", controller.getAplication );
 

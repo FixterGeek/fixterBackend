@@ -2,13 +2,9 @@ const Model = require("../models/User");
 let controller = {};
 
 
-controller.getUsers = (req, res) => {
-  Model.find()
-    .then(items => {
-      return res.status(200).json(items)
-    }).catch(error => {
-      return res.status(400).json(error)
-    })
+controller.getUsers = async (req, res) => {
+  let items = await Model.find()
+  return res.status(200).json(items)
 };
 
 // controller.getAplication = (req, res) => {
