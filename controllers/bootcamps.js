@@ -28,7 +28,7 @@ controller.getBootcampAdmin = async (req, res) => {
   let weeks = await Week.find({ bootcamp: id })
   let b = await bootcamp.toObject()
   b.weeks = weeks
-  res.statsu(200).json(b)
+  res.status(200).json(b)
 }
 
 // controller.createCourse = async (req, res) => {
