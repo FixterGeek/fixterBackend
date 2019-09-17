@@ -30,8 +30,7 @@ const learningSchema = new Schema({
   },
   bootcamp: {
     type: Schema.Types.ObjectId,
-    ref: "Bootcamp",
-    required: true
+    ref: "Bootcamp"
   },
 }, {
   timestamps: true

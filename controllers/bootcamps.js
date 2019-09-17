@@ -70,4 +70,17 @@ controller.getWeek = async (req, res) => {
   res.status(200).json(w)
 }
 
+//learnings
+controller.saveLearning = async (req, res) => {
+  let { id } = req.params
+  let { body } = req
+  if (!id) {
+    let learning = await Learning.create(body)
+    return res.status(201).json(learning)
+  } else {
+    let learning = await Learning.findByIdAndUpdate(id, body, { new: true })
+    return res.status(200).json(learning)
+  }
+}
+
 module.exports = controller;

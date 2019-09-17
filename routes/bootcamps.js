@@ -43,4 +43,19 @@ router.get(
   tryCatch(controller.getWeek)
 );
 
+//learnings
+router.post(
+  "/learnings",
+  verifyToken,
+  checkIfAdmin,
+  tryCatch(controller.saveLearning)
+);
+
+router.patch(
+  "/learnings/:id",
+  verifyToken,
+  checkIfAdmin,
+  tryCatch(controller.saveLearning)
+);
+
 module.exports = router;
