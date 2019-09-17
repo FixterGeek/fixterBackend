@@ -101,9 +101,11 @@ controller.deleteLearning = async (req, res) => {
   let w = await week.toObject()
   let l = learning.toObject()
   let order = w.itemsOrder.filter(i => i !== l._id)
-  week.itemsOrder = [...order]
-  week.markModified('itemsOrder');
+  week.itemsOrder = ["polloyon"]
+  await week.markModified('itemsOrder');
+  console.log("before", week)
   await week.save()
+  console.log("after", week)
   //borramos el orden
   return res.status(204).json(learning)
 }
