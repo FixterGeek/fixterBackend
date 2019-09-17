@@ -83,6 +83,9 @@ controller.saveLearning = async (req, res) => {
   let { body } = req
   if (!id) {
     let learning = await Learning.create(body)
+    // add order
+    await Week.findByIdAndUpdate(learning.week, { $push: { itemsOrder: learning._id } })
+    // add order
     return res.status(201).json(learning)
   } else {
     let learning = await Learning.findByIdAndUpdate(id, body, { new: true })
