@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const controller = require("../controllers/bootcamps");
-import { verifyToken } from '../helpers/jwt'
+let { verifyToken } = require("../helpers/jwt");
 
 function tryCatch(fn) {
   return function (req, res, next) {
