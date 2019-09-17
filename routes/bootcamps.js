@@ -42,6 +42,12 @@ router.get(
   checkIfAdmin,
   tryCatch(controller.getWeek)
 );
+router.patch(
+  "/weeks/:id",
+  verifyToken,
+  checkIfAdmin,
+  tryCatch(controller.updateWeek)
+);
 
 //learnings
 router.post(

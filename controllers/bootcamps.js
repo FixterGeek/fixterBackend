@@ -68,6 +68,12 @@ controller.getWeek = async (req, res) => {
   res.status(200).json(w)
 }
 
+constroller.updateWeek = async (req, res) => {
+  let { id } = req.params
+  let week = await Week.findByIdAndUpdate(id, req.body).populate('bootcamp')
+  res.status(200).json(week)
+}
+
 //learnings
 controller.saveLearning = async (req, res) => {
   let { id } = req.params

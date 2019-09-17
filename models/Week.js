@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 const weekSchema = new Schema({
   order: Number,
+  itemsOrder: [{
+    type: Schema.Types.ObjectId,
+    ref: "Learning"
+  }],
   photoURL: String,
   startdate: Date,
   endDate: Date,
