@@ -96,12 +96,13 @@ controller.saveLearning = async (req, res) => {
 controller.deleteLearning = async (req, res) => {
   let { id } = req.params
   let learning = await Learning.findByIdAndDelete(id)
-  //borramos el orden
+  //borramos del orden
   let week = await Week.findById(learning.week)
   let w = await week.toObject()
   let l = learning.toObject()
   let order = w.itemsOrder.filter(i => i !== l._id)
-  await Week.findByIdAndUpdate(w._id, { itemsOrder: [...order] })
+  week.itemsOrder = [...order]
+  await week.save()
   //borramos el orden
   return res.status(204).json(learning)
 }
