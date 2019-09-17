@@ -1,5 +1,7 @@
 const Bootcamp = require("../models/Bootcamp");
 const Week = require("../models/Week");
+const Learning = require("../models/Learning");
+
 
 let controller = {};
 
@@ -55,6 +57,15 @@ controller.addWeek = async (req, res) => {
   let b = await bootcamp.toObject()
   b.weeks = weeks
   res.status(201).json(b)
+}
+
+controller.getWeek = async (req, res) => {
+  let { id } = req.params
+  let week = await Week.findById(id).populate('bootcamp')
+  let w = await week.toObject()
+  let learnings = Learning.find({ week: id })
+  w.learnings = learnings
+  res.status(201).json(w)
 }
 
 module.exports = controller;

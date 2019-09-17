@@ -23,6 +23,7 @@ router.get(
   tryCatch(controller.getBootcampAdmin)
 );
 
+
 // router.patch("/:id", tryCatch(controller.updateCourse) );
 
 // router.delete("/:id", tryCatch(controller.deleteCourse) );
@@ -34,5 +35,12 @@ router.post(
   checkIfAdmin,
   tryCatch(controller.addWeek)
 )
+
+router.get(
+  "/weeks/:id",
+  verifyToken,
+  checkIfAdmin,
+  tryCatch(controller.getWeek)
+);
 
 module.exports = router;

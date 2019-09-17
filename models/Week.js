@@ -20,7 +20,8 @@ const weekSchema = new Schema({
   },
   bootcamp: {
     type: Schema.Types.ObjectId,
-    ref: "Bootcamp"
+    ref: "Bootcamp",
+    required: true
   },
 }, {
   timestamps: true
