@@ -74,7 +74,7 @@ controller.updateWeek = async (req, res) => {
   let w = await week.toObject()
   let learnings = await Learning.find({ week: id })
   w.learnings = learnings
-  res.status(200).json(week)
+  res.status(200).json(w)
 }
 
 //learnings
