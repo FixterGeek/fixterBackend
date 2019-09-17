@@ -16,7 +16,12 @@ function checkIfAdmin(req, res, next) {
 
 router.get("/", tryCatch(controller.getBootcamps));
 
-// router.post("/", tryCatch(controller.createCourse) );
+router.get(
+  "/:id/admin",
+  verifyToken,
+  checkIfAdmin,
+  tryCatch(controller.getBootcampAdmin)
+);
 
 // router.patch("/:id", tryCatch(controller.updateCourse) );
 
