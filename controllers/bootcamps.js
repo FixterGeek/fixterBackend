@@ -63,7 +63,7 @@ controller.getWeek = async (req, res) => {
   let { id } = req.params
   let week = await Week.findById(id).populate('bootcamp')
   let w = await week.toObject()
-  let learnings = Learning.find({ week: id })
+  let learnings = await Learning.find({ week: id })
   w.learnings = learnings
   console.log(w)
 
