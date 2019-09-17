@@ -1,4 +1,6 @@
 const Bootcamp = require("../models/Bootcamp");
+const Week = require("../models/Week");
+
 let controller = {};
 
 
@@ -34,5 +36,16 @@ controller.getBootcamps = async (req, res) => {
 // 	const course = await Course.findByIdAndRemove(req.params.id);
 // 	res.status(200).json(course);
 // };
+
+// weeks
+controller.addWeek = async (req, res) => {
+  let bootcampId = req.params.id
+  let week = await Week.create(req.body)
+  let weeks = await Week.find({ bootcamp: bootcampId })
+  let bootcamp = await Bootcamp.findById(bootcampId)
+  let b = bootcamp.toObject()
+  b.weeks = weeks
+  res.status(201).json(b)
+}
 
 module.exports = controller;

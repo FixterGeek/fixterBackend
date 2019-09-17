@@ -2,11 +2,12 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const weekSchema = new Schema({
+  order: Number,
   photoURL: String,
   startdate: Date,
   endDate: Date,
   title: {
-    required: "Proporciona un titulo para el curso",
+    required: "Proporciona un titulo para la semana",
     type: String
   },
   description: String,
@@ -15,18 +16,14 @@ const weekSchema = new Schema({
   },
   active: {
     type: Boolean,
-    default: true
+    default: false
   },
   bootcamp: {
     type: Schema.Types.ObjectId,
     ref: "Bootcamp"
   },
-  learnings: [{
-    type: Schema.Types.ObjectId,
-    ref: "Learning"
-  }]
 }, {
-    timestamps: true
-  });
+  timestamps: true
+});
 
 module.exports = mongoose.model("Week", weekSchema);
