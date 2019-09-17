@@ -65,7 +65,9 @@ controller.getWeek = async (req, res) => {
   let w = await week.toObject()
   let learnings = Learning.find({ week: id })
   w.learnings = learnings
-  res.status(201).json(w)
+  console.log(w)
+
+  res.status(200).json(w)
 }
 
 module.exports = controller;
