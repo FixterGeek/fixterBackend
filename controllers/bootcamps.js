@@ -65,8 +65,6 @@ controller.getWeek = async (req, res) => {
   let w = await week.toObject()
   let learnings = await Learning.find({ week: id })
   w.learnings = learnings
-  console.log(w)
-
   res.status(200).json(w)
 }
 
@@ -81,6 +79,12 @@ controller.saveLearning = async (req, res) => {
     let learning = await Learning.findByIdAndUpdate(id, body, { new: true })
     return res.status(200).json(learning)
   }
+}
+
+controller.deleteLearning = async (req, res) => {
+  let { id } = req.params
+  let learning = await Learning.findByIdAndDelete(id)
+  return res.status(204).json(learning)
 }
 
 module.exports = controller;

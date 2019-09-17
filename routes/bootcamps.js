@@ -58,4 +58,11 @@ router.patch(
   tryCatch(controller.saveLearning)
 );
 
+router.delete(
+  "/learnings/:id",
+  verifyToken,
+  checkIfAdmin,
+  tryCatch(controller.deleteLearning)
+);
+
 module.exports = router;
