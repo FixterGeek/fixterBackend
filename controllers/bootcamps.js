@@ -93,6 +93,13 @@ controller.saveLearning = async (req, res) => {
 controller.deleteLearning = async (req, res) => {
   let { id } = req.params
   let learning = await Learning.findByIdAndDelete(id)
+  //borramos el orden
+  let week = await Week.findById(learning.week)
+  let w = await week.toObject()
+  let l = learning.toObject()
+  w.itemsOrder.splice(indexOf(l._id), 1)
+  await Week.findByIdAndUpdate(w._id, { itemsOrder: w.itemsOrder })
+  //borramos el orden
   return res.status(204).json(learning)
 }
 

@@ -7,7 +7,7 @@ const learningSchema = new Schema({
   tipo: {
     type: String,
     enum: ["VIDEO", "POST", "AUDIO", "LINK"],
-    default: "LINK"
+    default: "VIDEO"
   },
   photoURL: String,
   title: {
