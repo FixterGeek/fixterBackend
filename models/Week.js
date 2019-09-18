@@ -8,7 +8,7 @@ const weekSchema = new Schema({
     ref: "Learning"
   }],
   photoURL: String,
-  startdate: Date,
+  startDate: Date,
   endDate: Date,
   title: {
     required: "Proporciona un titulo para la semana",
