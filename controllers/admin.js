@@ -1,10 +1,17 @@
-const Model = require("../models/User");
+const User = require("../models/User");
 let controller = {};
 
 
 controller.getUsers = async (req, res) => {
-  let items = await Model.find().populate('bootcamps')
+  let items = await User.find().populate('bootcamps')
   return res.status(200).json(items)
+};
+
+controller.editUser = async (req, res) => {
+  let { id } = req.params
+  let { body } = req
+  let user = await User.findByIdAndUpdate(id, body, { new: true })
+  return res.status(200).json(user)
 };
 
 // controller.getAplication = (req, res) => {

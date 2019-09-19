@@ -21,6 +21,13 @@ router.get(
   tryCatch(controller.getUsers)
 )
 
+router.patch(
+  '/users/:id',
+  verifyToken,
+  checkIfAdmin,
+  tryCatch(controller.editUser)
+)
+
 // router.get("/:id", controller.getAplication );
 
 // router.post("/", tryCatch(controller.createAplication));
