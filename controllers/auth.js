@@ -40,7 +40,12 @@ controller.self = async (req, res) => {
 controller.login = async (req, res) => {
 	//console.log(req.user);
 	let token = generateToken(req.user);
-	let user = await User.findById(req.user._id, { hash: 0, salt: 0 }).populate('bootcamps') // do some virtuals
+	let user = await User.findById(req.user._id, { hash: 0, salt: 0 }).populate({
+		path: "bootcamps",
+		populate: {
+			path: "weeks"
+		}
+	}) // do some virtuals
 	res.status(200).send({ user, token });
 };
 
