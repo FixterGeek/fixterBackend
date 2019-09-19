@@ -31,4 +31,13 @@ const weekSchema = new Schema({
   timestamps: true
 });
 
+weekSchema.virtual('learnings', {
+  ref: 'Learning',
+  localField: '_id',
+  foreignField: 'week'
+})
+
+bootCampSchema.set('toObject', { virtuals: true });
+bootCampSchema.set('toJSON', { virtuals: true });
+
 module.exports = mongoose.model("Week", weekSchema);
