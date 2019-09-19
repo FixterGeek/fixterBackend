@@ -37,7 +37,7 @@ weekSchema.virtual('learnings', {
   foreignField: 'week'
 })
 
-bootCampSchema.set('toObject', { virtuals: true });
-bootCampSchema.set('toJSON', { virtuals: true });
+weekSchema.set('toObject', { virtuals: true });
+weekSchema.set('toJSON', { virtuals: true });
 
 module.exports = mongoose.model("Week", weekSchema);
