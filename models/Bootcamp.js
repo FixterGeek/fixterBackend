@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-let Week = require('./Week')
 
 const bootCampSchema = new Schema({
   current: Boolean,
@@ -36,10 +35,10 @@ const bootCampSchema = new Schema({
 });
 
 bootCampSchema
-  .virtual('weeks').get(async function () {
-    let weeks = await Week.find({ bootcamp: this._id })
-    console.log("virtual: ", weeks)
-    return weeks
+  .virtual('weeks', {
+    ref: 'Week',
+    localField: '_id',
+    foreignField: 'bootcamp'
   });
 
 module.exports = mongoose.model("Bootcamp", bootCampSchema);
