@@ -26,19 +26,14 @@ const bootCampSchema = new Schema({
     type: Boolean,
     default: true
   }
-  // weeks: [{
-  //   type: Schema.Types.ObjectId,
-  //   ref: "Week"
-  // }]
 }, {
   timestamps: true
 });
 
-bootCampSchema
-  .virtual('weeks', {
-    ref: 'Week',
-    localField: '_id',
-    foreignField: 'bootcamp'
-  });
+bootCampSchema.virtual('weeks', {
+  ref: 'Week',
+  localField: '_id',
+  foreignField: 'bootcamp'
+});
 
 module.exports = mongoose.model("Bootcamp", bootCampSchema);
