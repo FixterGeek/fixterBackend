@@ -36,4 +36,4 @@ bootCampSchema.virtual('weeks', {
   foreignField: 'bootcamp'
 });
 
-module.exports = mongoose.model("Bootcamp", bootCampSchema);
+module.exports = mongoose.model("Bootcamp", bootCampSchema, "Bootcamp");
