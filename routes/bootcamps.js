@@ -15,7 +15,7 @@ function checkIfAdmin(req, res, next) {
 }
 
 router.get("/", tryCatch(controller.getBootcamps));
-
+router.get("/:id", tryCatch(controller.getSingleBootcamp));
 router.get(
   "/:id/admin",
   verifyToken,
