@@ -1,4 +1,5 @@
 const Bootcamp = require("../models/Bootcamp");
+const User = require("../models/User");
 const Week = require("../models/Week");
 const Learning = require("../models/Learning");
 const mongoose = require("mongoose")
@@ -35,11 +36,30 @@ controller.getBootcampAdmin = async (req, res) => {
 }
 
 controller.getSingleBootcamp = async (req, res) => {
+
+  // get id and user
   let { id } = req.params
+  let { user } = req
   let bootcamp = await Bootcamp.findById(id).populate('weeks')
   let learnings = await Learning.find({ week: bootcamp.weeks[0]._id }, { title: 1 })
   bootcamp.weeks[0].learnings = learnings
-  res.status(200).json(bootcamp)
+  // if user
+  if (user) {
+    let enrolled = user.bootcamps.find(_id => _id.toString() === bootcamp._id.toString())
+    if (!enrolled) {
+      return res.status(200).json(bootcamp)
+    }
+    let boot = await Bootcamp.findById(id).populate("weeks")
+    let learnings = await Learning.find({ week: bootcamp.weeks[0]._id })
+    boot.weeks[0].learnings = learnings
+    return res.status(200).json(boot)
+  }
+  return res.status(200).json(bootcamp)
+  // let { id } = req.params
+  // let bootcamp = await Bootcamp.findById(id).populate('weeks')
+  // let learnings = await Learning.find({ week: bootcamp.weeks[0]._id }, { title: 1 })
+  // bootcamp.weeks[0].learnings = learnings
+  // res.status(200).json(bootcamp)
 }
 
 // controller.createCourse = async (req, res) => {

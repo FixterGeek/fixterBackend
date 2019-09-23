@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const controller = require("../controllers/bootcamps");
-let { verifyToken } = require("../helpers/jwt");
+let { verifyToken, checkIfUserOrNext } = require("../helpers/jwt");
 
 function tryCatch(fn) {
   return function (req, res, next) {
@@ -15,7 +15,7 @@ function checkIfAdmin(req, res, next) {
 }
 
 router.get("/", tryCatch(controller.getBootcamps));
-router.get("/:id", tryCatch(controller.getSingleBootcamp));
+router.get("/:id", checkIfUserOrNext, tryCatch(controller.getSingleBootcamp));
 router.get(
   "/:id/admin",
   verifyToken,
