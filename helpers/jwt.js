@@ -9,7 +9,7 @@ exports.checkIfUserOrNext = (req, res, next) => {
     req.headers["authorization"];
   console.log("dafu ", token)
   console.log("if ", !token)
-  if (token === undefined) {
+  if (token === "undefined") {
     console.log("hould be here")
     return next()
   }
