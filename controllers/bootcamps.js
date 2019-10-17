@@ -96,7 +96,9 @@ controller.getWeek = async (req, res) => {
   let week = await Week.findById(id).populate('bootcamp')
   let w = await week.toObject()
   let learnings = await Learning.find({ week: id })
+  let homeworks = await Homework.find({ week: id })
   w.learnings = learnings
+  w.homeworks = homeworks
   res.status(200).json(w)
 }
 
