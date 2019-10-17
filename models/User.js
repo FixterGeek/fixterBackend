@@ -32,6 +32,13 @@ let userSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Bootcamp"
     }],
+    homeworks: [
+      {
+        id: String,
+        attempts: Number,
+        correct: Boolean
+      }
+    ],
     country: String,
     city: String
   },
