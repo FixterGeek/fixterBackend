@@ -37,6 +37,12 @@ weekSchema.virtual('learnings', {
   foreignField: 'week'
 })
 
+weekSchema.virtual('homeworks', {
+  ref: 'Homework',
+  localField: '_id',
+  foreignField: 'week'
+})
+
 weekSchema.set('toObject', { virtuals: true });
 weekSchema.set('toJSON', { virtuals: true });
 
