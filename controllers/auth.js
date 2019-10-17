@@ -34,7 +34,15 @@ controller.update = async (req, res) => {
 
 controller.updateHomework = async (req, res) => {
 	let { user, body } = req
-	let self = await User.findById(user._id, { projection: { hash: 0, salt: 0 } })
+	let self = await User.findById(user._id, { hash: 0, salt: 0 }).populate({
+		path: "bootcamps",
+		populate: {
+			path: "weeks",
+			populate: {
+				path: 'learnings'
+			}
+		}
+	})
 	self.homeworks = [...self.homeworks.map(h => {
 		if (h.id !== body.id) return h
 		return body
