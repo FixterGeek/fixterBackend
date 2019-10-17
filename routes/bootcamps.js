@@ -71,4 +71,27 @@ router.delete(
   tryCatch(controller.deleteLearning)
 );
 
+
+//homeworks
+router.post(
+  "/homeworks",
+  verifyToken,
+  checkIfAdmin,
+  tryCatch(controller.saveHomework)
+);
+
+router.patch(
+  "/homeworks/:id",
+  verifyToken,
+  checkIfAdmin,
+  tryCatch(controller.saveHomework)
+);
+
+router.delete(
+  "/homeworks/:id",
+  verifyToken,
+  checkIfAdmin,
+  tryCatch(controller.deleteHomework)
+);
+
 module.exports = router;

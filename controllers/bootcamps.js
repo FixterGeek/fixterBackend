@@ -2,6 +2,7 @@ const Bootcamp = require("../models/Bootcamp");
 const User = require("../models/User");
 const Week = require("../models/Week");
 const Learning = require("../models/Learning");
+const Homework = require("../models/Homework");
 const mongoose = require("mongoose")
 
 
@@ -135,6 +136,35 @@ controller.deleteLearning = async (req, res) => {
   await week.save()
   //borramos el orden
   return res.status(204).json(learning)
+}
+
+//homeworks
+controller.saveHomework = async (req, res) => {
+  let { id } = req.params
+  let { body } = req
+  if (!id) {
+    let homework = await Homework.create(body)
+    // add order
+    // await Week.findByIdAndUpdate(homework.week, { $push: { itemsOrder: homework._id } })
+    // add order
+    return res.status(201).json(homework)
+  } else {
+    let homework = await Learning.findByIdAndUpdate(id, body, { new: true })
+    return res.status(200).json(homework)
+  }
+}
+
+controller.deleteHomework = async (req, res) => {
+  let { id } = req.params
+  let homework = await Homework.findByIdAndDelete(id)
+  //borramos del orden
+  //let week = await Week.findById(homework.week)
+  //let order = week.itemsOrder.filter(i => i.toString() !== learning._id.toString())
+  //week.itemsOrder = [...order]
+  //await week.markModified('itemsOrder');
+  //await week.save()
+  //borramos el orden
+  return res.status(204).json(homework)
 }
 
 module.exports = controller;
