@@ -22,6 +22,11 @@ router.patch('/self',
   tryCatch(controller.update)
 )
 
+router.patch('/homework',
+  verifyToken,
+  tryCatch(controller.updateHomework)
+)
+
 //login
 router.post(
   "/login",
