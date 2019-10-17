@@ -32,30 +32,6 @@ controller.update = async (req, res) => {
 	return res.status(200).send(self)
 }
 
-controller.updateHomework = async (req, res) => {
-	let { user, body } = req
-	let self = await User.findById(user._id, { hash: 0, salt: 0 }).populate({
-		path: "bootcamps",
-		populate: {
-			path: "weeks",
-			populate: {
-				path: 'learnings'
-			}
-		}
-	})
-	if (!self.homeworks) {
-		self.homeworks = []
-		await self.save()
-	}
-
-	self.homeworks = [...self.homeworks.map(h => {
-		if (h.id !== body.id) return h
-		return body
-	})]
-	await self.save()
-	return res.status(200).send(self)
-}
-
 controller.self = async (req, res) => {
 	let { user } = req
 	return res.status(200).send(user)
