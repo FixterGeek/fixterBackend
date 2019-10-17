@@ -43,6 +43,7 @@ controller.updateHomework = async (req, res) => {
 			}
 		}
 	})
+	if (!self.homeworks) self.homeworks = []
 	self.homeworks = [...self.homeworks.map(h => {
 		if (h.id !== body.id) return h
 		return body
