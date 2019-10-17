@@ -151,7 +151,7 @@ controller.saveHomework = async (req, res) => {
     // add order
     return res.status(201).json(homework)
   } else {
-    let homework = await Learning.findByIdAndUpdate(id, body, { new: true })
+    let homework = await Homework.findByIdAndUpdate(id, body, { new: true })
     return res.status(200).json(homework)
   }
 }
