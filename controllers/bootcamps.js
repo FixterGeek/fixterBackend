@@ -54,12 +54,17 @@ controller.getSingleBootcamp = async (req, res) => {
     // hay que enviar solo las semanas activas... en base a la fecha
 
     let boot = await Bootcamp.findById(id).populate("weeks")
-    let learnings = await Learning.find()
-    // let learnings = await Learning.find({ week: bootcamp.weeks[0]._id })
-    let homeworks = await Homework.find()
-    //let homeworks = await Homework.find({ week: bootcamp.weeks[0]._id })
+    //prework
+    let learnings = await Learning.find({ week: bootcamp.weeks[0]._id })
+    let homeworks = await Homework.find({ week: bootcamp.weeks[0]._id })
     boot.weeks[0].learnings = learnings
     boot.weeks[0].homeworks = homeworks
+    // week1
+    let learnings1 = await Learning.find({ week: bootcamp.weeks[1]._id })
+    let homeworks1 = await Homework.find({ week: bootcamp.weeks[1]._id })
+    boot.weeks[1].learnings = learnings1
+    boot.weeks[1].homeworks = homeworks1
+
     return res.status(200).json(boot)
   }
   return res.status(200).json(bootcamp)
