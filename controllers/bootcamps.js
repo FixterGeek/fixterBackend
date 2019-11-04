@@ -70,6 +70,11 @@ controller.getSingleBootcamp = async (req, res) => {
     let homeworks2 = await Homework.find({ week: bootcamp.weeks[2]._id })
     boot.weeks[2].learnings = learnings2
     boot.weeks[2].homeworks = homeworks2
+    // week3
+    let learnings3 = await Learning.find({ week: bootcamp.weeks[3]._id })
+    let homeworks3 = await Homework.find({ week: bootcamp.weeks[3]._id })
+    boot.weeks[3].learnings = learnings3
+    boot.weeks[3].homeworks = homeworks3
 
     return res.status(200).json(boot)
   }
