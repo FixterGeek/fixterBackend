@@ -21,6 +21,38 @@ const contactForm = hbs.compile(
 	fs.readFileSync((__dirname, "./views/mail/contactForm.hbs"), "utf8")
 );
 
+exports.contactFormHorizon = ({ email, name, tel, message, date = Date.now() }) => {
+	transport
+		.sendMail({
+			subject: "👾🤖¡Tienes un nuevo mensaje!😎",
+			bcc: ["gmonroyh75@gmail.com", "brenda@fixter.org"],
+			html: `<h3>¡Tienes un nuevo mensaje!</h3>
+			<p> Nombre: ${name} </p>
+			<p> Correo: ${email} </p>
+			<p> Teléfono: ${tel}  </p>
+			<p>Mensaje: ${message} </p>
+			<p> Fecha: ${date} </p>
+			`
+		})
+		.then(r => {
+			console.log(r)
+			//return transport
+			// .sendMail({
+			// 	subject: "👾🤖¡Alguien nos ha contactado!😎",
+			// 	bcc: ["contacto@fixter.org", "brenda@fixter.org"],
+			// 	html: `
+			// 	<h2> Fecha: ${new Date()} </h2>
+			// 		<h2> Nombre: ${displayName} </h2>
+			// 		<h2> Teléfono: ${tel} </h2>
+			// 		<h2> Email: ${email} </h2>
+			// 		<h2> Mensaje: ${text} </h2>
+
+			// 	`
+			// })
+		})
+		.catch(e => console.log(e));
+};
+
 exports.welcomeMail = ({ email, displayName = "Geek!" }) => {
 	transport
 		.sendMail({
