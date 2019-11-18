@@ -73,7 +73,7 @@ app.use(
       "https://www.fixter.camp",
       "https://arangorestaurante.com",
       "https://www.arangorestaurante.com",
-      // "http://localhost:3000", // solo development
+      "http://localhost:3000", // solo development
       "https://horizontemx.com"
     ]
   })
