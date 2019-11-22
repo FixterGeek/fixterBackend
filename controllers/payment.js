@@ -24,6 +24,68 @@ function useCupon(cupon, used) {
     .then(cu => console.log("edited?", cu))
 }
 
+controller.group = (req, res) => {
+  const {
+    tel,
+    fullName,
+    email,
+    tokenId,
+    // bootcampId
+    total
+  } = req.body
+  const chargeObj = {
+    payment_method: {
+      type: "card",
+      token_id: tokenId,
+    }
+  };
+  //if (plazo !== "contado") chargeObj.payment_method.monthly_installments = parseInt(plazo);
+  const conektaObject =
+  {
+    currency: "MXN",
+    customer_info: {
+      name: fullName,
+      phone: tel,
+      email: email,
+    },
+    line_items: [
+      {
+        name: "Bootcamp online",
+        unit_price: 1000 * 100,
+        quantity: total ? (Number(total) / 1000) : 1,
+      }
+    ],
+    charges: [chargeObj]
+  }
+  conekta.Order.create(
+    conektaObject,
+    function (err, order) {
+      if (err) {
+        console.log('conektaerror', err)
+        return res.status(400).json(err);
+      }
+      //console.log('conekta order', order)
+      // create order
+      Order.create({
+        products: [{ model: "Bootcamp online" }], // rided off the id
+        conektaId: order._id,
+        // user: user._id,
+        total: total ? Number(total) : 1000,
+        paid: true
+      })
+        .then(o => {
+          return res.status(200).json({ o, order })
+        })
+        .catch(e => {
+          console.log(e)
+          return res.status(400).json(e)
+        })
+
+    }
+  ); // conecta create
+
+}
+
 controller.bootcamp = (req, res) => {
   const {
     tel,
