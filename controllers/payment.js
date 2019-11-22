@@ -25,7 +25,7 @@ function useCupon(cupon, used) {
 }
 
 controller.group = (req, res) => {
-  console.log("entró")
+  console.log("entró", req.body)
   const {
     tel,
     fullName,
