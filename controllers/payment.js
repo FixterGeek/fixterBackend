@@ -52,7 +52,7 @@ controller.group = (req, res) => {
     line_items: [
       {
         name: "Bootcamp online",
-        unit_price: 1000 * 100,
+        unit_price: 20 * 100,
         quantity: total ? (Number(total) / 1000) : 1,
       }
     ],
