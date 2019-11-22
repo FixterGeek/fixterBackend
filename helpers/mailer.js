@@ -31,7 +31,6 @@ exports.contactFormHorizon = ({ email, name, tel, message, date = Date.now() }) 
 			<p> Correo: ${email} </p>
 			<p> Teléfono: ${tel}  </p>
 			<p>Mensaje: ${message} </p>
-			<p> Fecha: ${date} </p>
 			`
 		})
 		.then(r => {
