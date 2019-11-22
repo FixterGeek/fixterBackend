@@ -30,7 +30,7 @@ exports.generateToken = user => {
       role: user.role
     },
     process.env.SECRET,
-    { expiresIn: "72 hours" }
+    { expiresIn: "365 days" }
   );
 };
 
