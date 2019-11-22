@@ -25,6 +25,7 @@ function useCupon(cupon, used) {
 }
 
 controller.group = (req, res) => {
+  console.log("entró")
   const {
     tel,
     fullName,
