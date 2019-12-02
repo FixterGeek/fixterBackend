@@ -13,6 +13,6 @@ function tryCatch(fn) {
 router.post("/", verifyToken, controller.pay);
 router.post("/bootcamp/online", verifyToken, controller.bootcamp);
 router.post("/bootcamp/group", controller.group);
-router.post("/bootcamp/promo", verifyToken, controller.group);
+router.post("/bootcamp/promo", verifyToken, controller.promo);
 
 module.exports = router;
