@@ -73,6 +73,7 @@ controller.promo = (req, res) => {
         products: [{ model: "Bootcamp online preorder" }], // rided off the id
         conektaId: order._id,
         user: user._id,
+        preorder: true,
         // total: total ? Number(total) : 1000,
         total: Number(total),
         paid: true

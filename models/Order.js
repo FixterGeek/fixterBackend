@@ -8,6 +8,10 @@ const orderSchema = new Schema({
       id: String
     }
   ],
+  preorder: {
+    type: Boolean,
+    default: false
+  },
   conektaId: String,
   user: {
     type: Schema.Types.ObjectId,
@@ -19,7 +23,7 @@ const orderSchema = new Schema({
     default: false
   }
 }, {
-    timestamps: true
-  });
+  timestamps: true
+});
 
 module.exports = mongoose.model("Order", orderSchema);
