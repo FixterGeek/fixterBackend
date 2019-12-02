@@ -79,8 +79,11 @@ controller.promo = (req, res) => {
         paid: true
       })
         .then(o => {
-          User.findByIdAndUpdate(user._id, { $push: { bootcamps: bootcampId } }, { new: true }) // asignamos
-          return res.status(200).json({ o, order })
+          return User.findByIdAndUpdate(user._id, { $push: { bootcamps: bootcampId } }, { new: true }) // asignamos
+
+        })
+        .then(u => {
+          return res.status(200).json({ message: "ok" })
         })
         .catch(e => {
           console.log(e)
