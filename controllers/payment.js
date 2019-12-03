@@ -32,6 +32,7 @@ controller.promo = (req, res) => {
     email,
     tokenId,
     bootcampId,
+    bootcampName = "Bootcamp online preorden",
     total
   } = req.body
   const user = req.user
@@ -52,7 +53,7 @@ controller.promo = (req, res) => {
     },
     line_items: [
       {
-        name: "Bootcamp online",
+        name: "Bootcamp online preordenn",
         unit_price: Number(total) * 100,
         // quantity: total ? (Number(total) / 1000) : 1,
         quantity: 1,
@@ -70,7 +71,7 @@ controller.promo = (req, res) => {
       //console.log('conekta order', order)
       // create order
       Order.create({
-        products: [{ model: "Bootcamp online preorder" }], // rided off the id
+        products: [{ model: bootcampName }], // rided off the id
         conektaId: order._id,
         user: user._id,
         preorder: true,
