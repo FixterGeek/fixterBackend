@@ -203,7 +203,7 @@ controller.getExam = async (req, res) => {
   if (req.query.bootcampId) {
     let exam = await Exam.findOne({ bootcamp: id })
     console.log(exam)
-    if (exam) return res.status(200).json
+    if (exam) return res.status(200).json(exam)
   }
   let exam = await Exam.findById(id)
   res.status(200).json(exam)
