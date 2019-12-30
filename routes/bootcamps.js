@@ -94,4 +94,12 @@ router.delete(
   tryCatch(controller.deleteHomework)
 );
 
+// Exams
+router.get(
+  "/exams/:id",
+  // verifyToken,
+  // checkIfAdmin,
+  tryCatch(controller.getExam)
+);
+
 module.exports = router;

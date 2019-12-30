@@ -1,6 +1,7 @@
 const Bootcamp = require("../models/Bootcamp");
 const User = require("../models/User");
 const Week = require("../models/Week");
+const Exam = require("../models/Exam");
 const Learning = require("../models/Learning");
 const Homework = require("../models/Homework");
 const mongoose = require("mongoose")
@@ -194,5 +195,18 @@ controller.deleteHomework = async (req, res) => {
   //borramos el orden
   return res.status(204).json(homework)
 }
+
+// exams
+
+controller.getExam = async (req, res) => {
+  let { id } = req.params
+  if (req.query.bootcampId) {
+    let exam = await Exam.findOne({ bootcamp: id })
+    if (exam) return res.status(200).json
+  }
+  let exam = await Exam.findById(id)
+  res.status(200).json(exam)
+}
+
 
 module.exports = controller;
