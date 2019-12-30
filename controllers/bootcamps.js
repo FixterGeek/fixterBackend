@@ -201,8 +201,8 @@ controller.deleteHomework = async (req, res) => {
 controller.getExam = async (req, res) => {
   let { id } = req.params
   if (req.query.bootcampId) {
-    console.log(req.query)
     let exam = await Exam.findOne({ bootcamp: id })
+    console.log(exam)
     if (exam) return res.status(200).json
   }
   let exam = await Exam.findById(id)
