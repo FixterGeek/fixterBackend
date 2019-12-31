@@ -24,7 +24,7 @@ controller.getBootcamps = async (req, res) => {
     return res.status(200).json({ bootcamps })
   }
   // si no hay query params mando todos los activos
-  bootcamps = await Bootcamp.find({ active: true }).populate('weeks').populate('exam'); // quitamos las learnings
+  bootcamps = await Bootcamp.find({ active: true }).populate('weeks').populate('exam'); // quitamos las learnings DEBES BORRAR EL EXAMEN PORQUE LLEVA RESPUESTAS
   res.status(200).json({ bootcamps })
 };
 
@@ -45,7 +45,7 @@ controller.getSingleBootcamp = async (req, res) => {
   let { id } = req.params
   let { user } = req
   let bootcamp = await Bootcamp.findById(id).populate('weeks')
-  let learnings = await Learning.find({ week: bootcamp.weeks[0]._id }, { title: 1 })
+  let learnings = await Learning.find({ week: bootcamp.weeks[0]._id }, { title: 1 }) // cuando no hay semanas falla
   bootcamp.weeks[0].learnings = learnings
   // if user
   if (user) {
@@ -199,6 +199,9 @@ controller.deleteHomework = async (req, res) => {
 }
 
 // exams
+controller.gradeExam = async (req, res) => {
+
+}
 
 controller.saveExam = async (req, res) => {
   let { id } = req.params // id del bootcamp
@@ -217,10 +220,21 @@ controller.getExam = async (req, res) => {
   let { id } = req.params
   if (req.query.bootcampId) {
     let exam = await Exam.findOne({ bootcamp: id })
-    console.log(exam)
-    if (exam) return res.status(200).json(exam)
+    if (exam) {
+      exam = await exam.toObject()
+      exam.answers = exam.questions.map(q => {
+        delete q.correct
+        return q
+      })
+      return res.status(200).json(exam)
+    }
   }
   let exam = await Exam.findById(id)
+  exam = await exam.toObject()
+  exam.answers = exam.questions.map(q => {
+    delete q.correct
+    return q
+  })
   res.status(200).json(exam)
 }
 
