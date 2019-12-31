@@ -24,7 +24,7 @@ controller.getBootcamps = async (req, res) => {
     return res.status(200).json({ bootcamps })
   }
   // si no hay query params mando todos los activos
-  bootcamps = await Bootcamp.find({ active: true }).populate('weeks'); // quitamos las learnings
+  bootcamps = await Bootcamp.find({ active: true }).populate('weeks').populate('exam'); // quitamos las learnings
   res.status(200).json({ bootcamps })
 };
 
