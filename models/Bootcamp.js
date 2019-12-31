@@ -36,6 +36,12 @@ bootCampSchema.virtual('weeks', {
   foreignField: 'bootcamp'
 });
 
+bootCampSchema.virtual('exam', {
+  ref: 'Exam',
+  localField: '_id',
+  foreignField: 'exam'
+});
+
 bootCampSchema.set('toObject', { virtuals: true });
 bootCampSchema.set('toJSON', { virtuals: true });
 

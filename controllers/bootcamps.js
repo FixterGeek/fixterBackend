@@ -198,6 +198,19 @@ controller.deleteHomework = async (req, res) => {
 
 // exams
 
+controller.saveExam = async (req, res) => {
+  let { id } = req.params // id del bootcamp
+  let { body } = req
+  let exist = await Exam.findOne({ bootcamp: id })
+  if (exist) {
+    let exam = await Exam.findByIdAndUpdate(exist._id, body, { new: true })
+    return res.status(200).json(exam)
+  } else {
+    let exam = await Exam.create(body)
+    return res.status(200).json(exam)
+  }
+}
+
 controller.getExam = async (req, res) => {
   let { id } = req.params
   if (req.query.bootcampId) {
