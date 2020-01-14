@@ -172,7 +172,7 @@ controller.bootcamp = async (req, res) => {
   let bootcamp = await Bootcamp.findById(bootcampId)
   const chargeObj = {
     payment_method: {
-      monthly_installments: monthly_installments || null,
+      monthly_installments: monthly_installments || 1,
       type: "card",
       token_id: tokenId,
     }
