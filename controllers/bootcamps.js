@@ -217,6 +217,7 @@ controller.gradeExam = async (req, res) => {
   }
   let result = { string: `${grade}/${total}`, grade, approved: ((grade * 10 / total) > 8) }
   // marcamos intentos
+  console.log("ELUSER", req.user)
   if (!req.user.exams) req.user.exams = { [id]: 0 }
   req.user.exams[id] = req.user.exams[id] + 1
   // req.user.markModified('exams');
