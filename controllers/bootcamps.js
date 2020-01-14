@@ -203,6 +203,9 @@ controller.gradeExam = async (req, res) => {
   let { id } = req.params // del bootcamp
   let { body } = req // answers
   console.log("respuestas: ", body)
+  let exist = await Exam.findOne({ bootcamp: id })
+  if (!exist) return res.status(204).json({ message: "No hay examen asociado" })
+  console.log("examen", exist)
 }
 
 controller.saveExam = async (req, res) => {
