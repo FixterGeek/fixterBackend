@@ -219,6 +219,7 @@ controller.gradeExam = async (req, res) => {
   // guardamos resultado
   if (!req.user.exams) req.user.exams = {}
   req.user.exams[id] = { ...result }
+  req.user.markModified('exams');
   await req.user.save()
   return res.status(200).json(result)
 }
