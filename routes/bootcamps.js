@@ -96,6 +96,12 @@ router.delete(
 
 // Exams
 router.post(
+  "/exams/:id/grade",  // id del bootcamp
+  verifyToken,
+  // checkIfAdmin,
+  tryCatch(controller.gradeExam)
+);
+router.post(
   "/exams/:id",  // id del bootcamp
   verifyToken,
   checkIfAdmin,

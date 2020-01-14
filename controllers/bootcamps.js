@@ -200,7 +200,9 @@ controller.deleteHomework = async (req, res) => {
 
 // exams
 controller.gradeExam = async (req, res) => {
-
+  let { id } = req.params // del bootcamp
+  let { body } = req // answers
+  console.log("respuestas: ", body)
 }
 
 controller.saveExam = async (req, res) => {
@@ -230,11 +232,14 @@ controller.getExam = async (req, res) => {
     }
   }
   let exam = await Exam.findById(id)
-  exam = await exam.toObject()
-  exam.answers = exam.questions.map(q => {
-    delete q.correct
-    return q
-  })
+  if (exam) {
+    exam = await exam.toObject()
+    exam.answers = exam.questions.map(q => {
+      delete q.correct
+      return q
+    })
+  } else return res.status(204)
+
   res.status(200).json(exam)
 }
 
