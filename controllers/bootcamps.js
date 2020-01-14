@@ -204,7 +204,7 @@ controller.gradeExam = async (req, res) => {
   let { body } = req // answers
   // verificamos intentos
   // let user = await User.findById(req.user._id)
-  if (req.user.exams && req.user.exams[id] > 2) return res.status(403).json({ message: "Ya haz respondido este examen" })
+  // if (req.user.exams && req.user.exams[id] > 2) return res.status(403).json({ message: "Ya haz respondido este examen" })
   let exist = await Exam.findOne({ bootcamp: id })
   if (!exist) return res.status(204).json({ message: "No hay examen asociado" })
   let exam = await exist.toObject()
@@ -218,8 +218,7 @@ controller.gradeExam = async (req, res) => {
   let result = { string: `${grade}/${total}`, grade, approved: ((grade * 10 / total) > 8) }
   // marcamos intentos
   console.log("ELUSER", req.user)
-  if (!req.user.exams) req.user.exams = { [id]: 0 }
-  req.user.exams[id] = req.user.exams[id] + 1
+  if (!req.user.exams) req.user.exams = { [id]: result }
   // req.user.markModified('exams');
   await req.user.save()
   return res.status(200).json(result)
