@@ -216,10 +216,9 @@ controller.gradeExam = async (req, res) => {
     if (q.correct == answers[i]) grade++
   }
   let result = { string: `${grade}/${total}`, grade, approved: ((grade * 10 / total) > 8) }
-  // marcamos intentos
-  console.log("ELUSER", req.user)
-  if (!req.user.exams) req.user.exams = { [id]: result }
-  // req.user.markModified('exams');
+  // guardamos resultado
+  if (!req.user.exams) req.user.exams = {}
+  req.user.exams[id] = { ...result }
   await req.user.save()
   return res.status(200).json(result)
 }
