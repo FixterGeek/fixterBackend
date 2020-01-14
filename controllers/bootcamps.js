@@ -206,6 +206,17 @@ controller.gradeExam = async (req, res) => {
   let exist = await Exam.findOne({ bootcamp: id })
   if (!exist) return res.status(204).json({ message: "No hay examen asociado" })
   console.log("examen", exist)
+  let exam = await exist.toObject()
+  let { questions } = exam
+  let total = questions.length
+  let { answers } = body
+  let grade = 0
+  for (let [i, q] of questions.entries()) {
+    if (q.correct == answers[i]) grade++
+  }
+  let result = { string: `${grade}/${total}`, grade, approved: ((grade * 10 / total) > 8) }
+  console.log("Grado:", result)
+  return res.status(200).json(result)
 }
 
 controller.saveExam = async (req, res) => {
