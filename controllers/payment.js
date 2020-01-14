@@ -159,17 +159,20 @@ controller.group = (req, res) => {
 
 }
 
-controller.bootcamp = (req, res) => {
+controller.bootcamp = async (req, res) => {
   const {
     tel,
     fullName,
     email,
     tokenId,
-    bootcampId
+    bootcampId,
+    monthly_installments
   } = req.body
   const user = req.user
+  let bootcamp = await Bootcamp.findById(bootcampId)
   const chargeObj = {
     payment_method: {
+      monthly_installments: monthly_installments || null,
       type: "card",
       token_id: tokenId,
     }
@@ -185,8 +188,8 @@ controller.bootcamp = (req, res) => {
     },
     line_items: [
       {
-        name: "Bootcamp online",
-        unit_price: 1000 * 100,
+        name: bootcamp.title,
+        unit_price: Number(bootcamp.price) * 100,
         quantity: 1,
       }
     ],
