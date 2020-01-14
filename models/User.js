@@ -34,7 +34,8 @@ let userSchema = new Schema(
     }],
     homeworks: Object,
     country: String,
-    city: String
+    city: String,
+    exams: Object
   },
   {
     timestamps: true

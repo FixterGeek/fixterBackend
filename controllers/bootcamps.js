@@ -202,10 +202,11 @@ controller.deleteHomework = async (req, res) => {
 controller.gradeExam = async (req, res) => {
   let { id } = req.params // del bootcamp
   let { body } = req // answers
-  console.log("respuestas: ", body)
+  // verificamos intentos
+  // let user = await User.findById(req.user._id)
+  if (req.user.exams[id] && req.user.exams[id] > 2) return res.status(403).json({ message: "Ya haz respondido este examen" })
   let exist = await Exam.findOne({ bootcamp: id })
   if (!exist) return res.status(204).json({ message: "No hay examen asociado" })
-  console.log("examen", exist)
   let exam = await exist.toObject()
   let { questions } = exam
   let total = questions.length
@@ -215,7 +216,11 @@ controller.gradeExam = async (req, res) => {
     if (q.correct == answers[i]) grade++
   }
   let result = { string: `${grade}/${total}`, grade, approved: ((grade * 10 / total) > 8) }
-  console.log("Grado:", result)
+  // marcamos intentos
+  if (!req.user.exams) req.user.exams = { [id]: 0 }
+  req.user.exams[id] = req.user.exams[id] + 1
+  // req.user.markModified('exams');
+  await req.user.save()
   return res.status(200).json(result)
 }
 
