@@ -218,7 +218,8 @@ controller.gradeExam = async (req, res) => {
   let result = { string: `${grade}/${total}`, grade, approved: ((grade * 10 / total) > 8) }
   // guardamos resultado
   if (!req.user.exams) req.user.exams = {}
-  req.user.exams[id] = { ...result }
+  if (req.user.exams[id]) req.user.exams[id] = { attempts: req.user.exams[id].attempts + 1, ...result }
+  else req.user.exams[id] = { attempts: 1, ...result }
   req.user.markModified('exams');
   await req.user.save()
   return res.status(200).json(result)
@@ -251,7 +252,7 @@ controller.getExam = async (req, res) => {
       // verify user
       console.log(user.exams)
       if (user.exams && user.exams[exam._id] && user.exams[exam._id].attempts > 1) {
-        return res.status(401).json({ message: "Ya no puedes responder esta examen", attempts: user.exams[exam._id].attempts })
+        return res.status(401).json({ message: "Ya no puedes responder este examen", attempts: user.exams[exam._id].attempts })
       }
       return res.status(200).json(exam)
     }
