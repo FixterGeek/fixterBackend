@@ -10,7 +10,7 @@ const mongoose = require("mongoose")
 let controller = {};
 
 
-controller.getBootcamps = async (req, res) => {
+controller.getBootcamps = async (req, res) => { // asegurarse de que no enviamos las respuestas del examen ------------------------------
   //let bootcamps = [];
   let queryParams = Object.keys(req.query);
   // filtrando cursos activos por query params
@@ -238,6 +238,7 @@ controller.saveExam = async (req, res) => {
 }
 
 controller.getExam = async (req, res) => {
+  let { user } = req // buscamos al usuario también para saber sus intentos
   let { id } = req.params
   if (req.query.bootcampId) {
     let exam = await Exam.findOne({ bootcamp: id })
@@ -247,6 +248,11 @@ controller.getExam = async (req, res) => {
         delete q.correct
         return q
       })
+      // verify user
+      console.log(user.exams)
+      if (user.exams && user.exams[exam._id] && user.exams[exam._id].attempts > 1) {
+        return res.status(401).json({ message: "Ya no puedes responder esta examen", attempts: user.exams[exam._id].attempts })
+      }
       return res.status(200).json(exam)
     }
   }
