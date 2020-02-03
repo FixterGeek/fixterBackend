@@ -109,7 +109,7 @@ router.post(
 );
 router.get(
   "/exams/:id",
-  // verifyToken,
+  verifyToken,
   // checkIfAdmin,
   tryCatch(controller.getExam)
 );
