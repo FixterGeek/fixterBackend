@@ -250,10 +250,10 @@ controller.getExam = async (req, res) => {
         return q
       })
       // verify user
-      if (user.exams && user.exams[exam._id] && user.exams[exam._id].attempts > 1) {
+      if (user.exams && user.exams[id] && user.exams[id].attempts > 1) {
         return res.status(401).json({ message: "Ya no puedes responder este examen", attempts: user.exams[exam._id].attempts })
       }
-      if (user.exams && user.exams[exam._id]) exam.attempts = user.exams[exam._id].attempts
+      if (user.exams && user.exams[id]) exam.attempts = user.exams[id].attempts
       return res.status(200).json(exam)
     }
   }
