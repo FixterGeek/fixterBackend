@@ -215,7 +215,7 @@ controller.gradeExam = async (req, res) => {
   for (let [i, q] of questions.entries()) {
     if (q.correct == answers[i]) grade++
   }
-  let result = { string: `${grade}/${total}`, grade, approved: ((grade * 10 / total) > 8) }
+  let result = { bootcamp: exam.bootcamp, string: `${grade}/${total}`, grade, approved: ((grade * 10 / total) > 8) }
   // guardamos resultado
   if (!req.user.exams) req.user.exams = {}
   if (req.user.exams[id]) req.user.exams[id] = { attempts: req.user.exams[id].attempts + 1, ...result }
