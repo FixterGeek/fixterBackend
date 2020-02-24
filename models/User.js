@@ -4,6 +4,11 @@ let passportLocalMongoose = require("passport-local-mongoose");
 
 let userSchema = new Schema(
   {
+    payments:[
+      {
+        type:String
+      }
+    ],
     changePass: {
       type: Boolean,
       default: false

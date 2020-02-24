@@ -9,7 +9,6 @@ const conekta = require('conekta')
 let controller = {};
 
 
-
 //conekta.api_key = process.env.ENV === 'production' ? process.env.CONEKTA_KEY : process.env.CONEKTA_KEY_DEV
 conekta.api_key = process.env.CONEKTA_KEY
 conekta.api_version = '2.0.0';
@@ -24,16 +23,22 @@ function useCupon(cupon, used) {
     .then(cu => console.log("edited?", cu))
 }
 
+controller.whosmissing = async (req,res)=>{
+  let orders = await Order.find({total:250}).populate('user', 'email')
+  let users = orders.map(o=>({id:o.user._id, bootcamp:o.products[0]._id}))
+  res.json({users})
+}
+
 controller.promo = (req, res) => {
   console.log("entró", req.body)
   const {
     tel,
-    fullName,
-    email,
+    // fullName,
+    // email,
     tokenId,
     bootcampId,
     bootcampName = "Bootcamp online preorden",
-    total
+    // total
   } = req.body
   const user = req.user
   const chargeObj = {
@@ -47,14 +52,15 @@ controller.promo = (req, res) => {
   {
     currency: "MXN",
     customer_info: {
-      name: fullName,
+      // name: fullName,
       phone: tel,
-      email: email,
+      // email: email,
     },
     line_items: [
       {
-        name: "Bootcamp online preordenn",
-        unit_price: Number(total) * 100,
+        name: "Bootcamp online preorden",
+        // unit_price: Number(total) * 100,
+        unit_price:1250 * 100,
         // quantity: total ? (Number(total) / 1000) : 1,
         quantity: 1,
       }
@@ -80,11 +86,12 @@ controller.promo = (req, res) => {
         paid: true
       })
         .then(o => {
-          return User.findByIdAndUpdate(user._id, { $push: { bootcamps: bootcampId } }, { new: true }) // asignamos
+          // return User.findByIdAndUpdate(user._id, { $push: { bootcamps: bootcampId } }, { new: true }) // asignamos
+          return User.findByIdAndUpdate(user._id, { $push: { payments: bootcampId } }, { new: true })
 
         })
         .then(u => {
-          return res.status(200).json({ message: "ok" })
+          return res.status(200).json({ message: "ok", user:u })
         })
         .catch(e => {
           console.log(e)
