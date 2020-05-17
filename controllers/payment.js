@@ -215,6 +215,7 @@ controller.bootcamp = async (req, res) => {
 			.then((o) => {
 				// send Email:
 				inscriptionMail({
+					email,
 					displayName: fullName,
 					bootcampTitle: bootcamp.title,
 				});

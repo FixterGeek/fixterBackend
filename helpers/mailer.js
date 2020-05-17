@@ -63,7 +63,7 @@ exports.contactFormHorizon = ({
 		.catch((e) => console.log(e));
 };
 
-exports.inscriptionMail = ({ bootcampTitle, displayName }) => {
+exports.inscriptionMail = ({ email, bootcampTitle, displayName }) => {
 	transport
 		.sendMail({
 			subject: "👾🤖¡Bienvenido al Bootcamp!😎",
