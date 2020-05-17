@@ -196,7 +196,9 @@
                             <td class="mobile-resize" style="color:#ca3e47; font-weight: 800;
                                                             font-size: 20px; font-weight: 600;  text-align: center;
                                                             vertical-align: top;">
-                              <h2> {{name}}, ¡Bienvenido a FixterGeek!</h2>
+                              <h2>
+                                {{#if name}}{{name}}{{/if}}
+                                ¡Bienvenido a FixterGeek!</h2>
                             </td>
                           </tr>
 

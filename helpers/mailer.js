@@ -59,7 +59,7 @@ exports.contactFormHorizon = ({
 		.catch((e) => console.log(e));
 };
 
-exports.welcomeMail = ({ email, displayName = "Hola" }) => {
+exports.welcomeMail = ({ email, displayName }) => {
 	transport
 		.sendMail({
 			subject: "👾🤖¡Bienvenido a FixterGeek!😎",
