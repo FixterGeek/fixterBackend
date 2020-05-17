@@ -192,7 +192,7 @@ controller.bootcamp = async (req, res) => {
 		line_items: [
 			{
 				name: bootcamp.title,
-				unit_price: Number(bootcamp.price) * 1,
+				unit_price: Number(bootcamp.price) * 100,
 				quantity: 1,
 			},
 		],
