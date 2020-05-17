@@ -30,7 +30,7 @@ router.post("/contacto", (req, res, next) => {
 
 router.post("/maillist", async (req, res) => {
 	let mItem = await MailItem.create(req.body);
-	res.status(200).send({ message: "Mail added" });
+	res.status(200).send({ message: "Mail added", mItem });
 });
 
 module.exports = router;

@@ -10,24 +10,23 @@ const logger = require("morgan");
 const path = require("path");
 const passport = require("passport");
 require("./helpers/passport");
-const cors = require('cors');
+const cors = require("cors");
 const session = require("express-session");
 
-
 mongoose
-  .connect(process.env.DB, { useNewUrlParser: true })
-  .then(x => {
-    console.log(
-      `Connected to Mongo! Database name: "${x.connections[0].name}"`
-    );
-  })
-  .catch(err => {
-    console.error("Error connecting to mongo", err);
-  });
+	.connect(process.env.DB, { useNewUrlParser: true })
+	.then((x) => {
+		console.log(
+			`Connected to Mongo! Database name: "${x.connections[0].name}"`
+		);
+	})
+	.catch((err) => {
+		console.error("Error connecting to mongo", err);
+	});
 
 const app_name = require("./package.json").name;
 const debug = require("debug")(
-  `${app_name}:${path.basename(__filename).split(".")[0]}`
+	`${app_name}:${path.basename(__filename).split(".")[0]}`
 );
 
 const app = express();
@@ -52,11 +51,11 @@ app.use(cookieParser());
 // Express View engine setup
 
 app.use(
-  require("node-sass-middleware")({
-    src: path.join(__dirname, "public"),
-    dest: path.join(__dirname, "public"),
-    sourceMap: true
-  })
+	require("node-sass-middleware")({
+		src: path.join(__dirname, "public"),
+		dest: path.join(__dirname, "public"),
+		sourceMap: true,
+	})
 );
 
 //passport
@@ -66,19 +65,18 @@ app.use(passport.session());
 // CORS
 
 app.use(
-  cors({
-    origin: [
-      "http://localhost:3001",
-      "https://fixter.camp",
-      "https://www.fixter.camp",
-      "https://arangorestaurante.com",
-      "https://www.arangorestaurante.com",
-      "http://localhost:3000", // solo development
-      "https://horizontemx.com"
-    ]
-  })
+	cors({
+		origin: [
+			"http://localhost:3001",
+			"https://fixter.camp",
+			"https://www.fixter.camp",
+			"https://arangorestaurante.com",
+			"https://www.arangorestaurante.com",
+			"http://localhost:3000", // solo development
+			"https://horizontemx.com",
+		],
+	})
 );
-
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
@@ -108,7 +106,5 @@ app.use("/bootcamps", bootcamps);
 app.use("/cupons", cupons);
 app.use("/", auth);
 app.use("/", index);
-
-
 
 module.exports = app;
