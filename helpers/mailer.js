@@ -10,6 +10,10 @@ let transport = nodemailer.createTransport({
 	},
 });
 
+const inscriptionToBootcamp = hbs.compile(
+	fs.readFileSync((__dirname, "./views/mail/inscripcion.hbs"), "utf8")
+);
+
 const accountCreated = hbs.compile(
 	// fs.readFileSync((__dirname, "./views/mail/bienvenida.hbs"), "utf8")
 	fs.readFileSync((__dirname, "./views/mail/welcome.hbs"), "utf8")
@@ -56,6 +60,17 @@ exports.contactFormHorizon = ({
 			// 	`
 			// })
 		})
+		.catch((e) => console.log(e));
+};
+
+exports.inscriptionMail = ({ bootcampTitle, displayName }) => {
+	transport
+		.sendMail({
+			subject: "👾🤖¡Bienvenido al Bootcamp!😎",
+			bcc: email,
+			html: inscriptionToBootcamp({ name: bootcampTitle, displayName }),
+		})
+		.then((r) => console.log(r))
 		.catch((e) => console.log(e));
 };
 
