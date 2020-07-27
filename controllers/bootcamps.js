@@ -33,9 +33,8 @@ controller.getBootcampAdmin = async (req, res) => {
   let bootcamp = await Bootcamp.findById(id)
   let weeks = await Week.find({ bootcamp: id })
   let exam = await Exam.find({ bootcamp: id })
-  console.log("hay o no hay?", exam)
   let b = await bootcamp.toObject()
-  if (exam) b.exam = exam.toObject()
+  if (exam[0]) b.exam = exam[0].toObject()
   b.weeks = weeks
   res.status(200).json(b)
 }
