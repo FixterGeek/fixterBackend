@@ -18,7 +18,7 @@ controller.getEditions = async (req, res) => {
 			return {[key]: req.query[key]}
 		});
 		editions = await Edition.find(query);
-		return res.status(200).json({editions})
+		return res.status(200).json(editions)
 	}
 	// si no hay query params mando todos
 	editions = await Edition.find({active:true});
