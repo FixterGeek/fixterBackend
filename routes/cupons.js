@@ -14,15 +14,22 @@ function checkIfAdmin(req, res, next) {
 	next()
 }
 
+function checkIfSeller(req, res, next) {
+	if (req.user.role === "ADMIN" || req.user.role === 'SELLER') {
+		return next()
+	}
+	res.status(301).json({ message: "No tienes authorización" })
+}
+
 router.post("/apply", verifyToken, tryCatch(controller.apply));
 
-router.patch("/:id", verifyToken, checkIfAdmin, tryCatch(controller.updateCupon));
+router.patch("/:id", verifyToken, checkIfSeller, tryCatch(controller.updateCupon));
 
 router.delete("/:id", verifyToken, checkIfAdmin, tryCatch(controller.deleteCupon));
 
-router.post("/", verifyToken, checkIfAdmin, tryCatch(controller.createCupon));
+router.post("/", verifyToken, checkIfSeller, tryCatch(controller.createCupon));
 
-router.get("/", verifyToken, checkIfAdmin, tryCatch(controller.getCupons));
+router.get("/", verifyToken, checkIfSeller, tryCatch(controller.getCupons));
 
 
 

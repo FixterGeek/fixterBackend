@@ -3,8 +3,23 @@ let controller = {};
 
 
 controller.getCupons = async (req, res) => {
-	cupons = await Cupon.find();
+	const cupons = await Cupon.find();
 	res.status(200).json(cupons)
+};
+
+controller.validateCoupon = async (req, res) => {
+	const {name} = req.params
+	const coupon = await Cupon.findOne({name});
+	if(!(coupon===null)) {
+		const today = new Date()
+		const dueDate = new Date(coupon.validUntil)
+		if(today<dueDate) {
+			return 	res.status(200).json({isValid:true, coupon})
+		}else{
+			return res.status(200).json({isValid:false, coupon})
+		}
+	}
+	res.status(404).json({message:'Descuento no encontrado'})
 };
 
 controller.apply = async (req, res) => {
@@ -39,7 +54,8 @@ controller.apply = async (req, res) => {
 
 
 controller.createCupon = async (req, res) => {
-	const cupon = await Cupon.create(req.body);
+	const {user:{_id}} = req
+	const cupon = await Cupon.create({...req.body, createdBy:_id});
 	res.status(200).json(cupon);
 };
 

@@ -19,7 +19,7 @@ let userSchema = new Schema(
     },
     role: {
       type: String,
-      enum: ["ADMIN", "GUEST", "PREMIUM", "STUDENT"],
+      enum: ["ADMIN", "SELLER", "GUEST", "PREMIUM", "STUDENT"],
       default: "GUEST"
     },
     email: String,

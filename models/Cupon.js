@@ -23,7 +23,21 @@ const cuponSchema = new Schema({
   used: {
     type: Object,
     default: { 0: true }
-  }
+  },
+  // 2021
+  exchanged:[{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }],
+  validUntil: {
+    type: Date
+  },
+  createdBy: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  amount: Number
+  //
 }, {
     timestamps: true
   })
