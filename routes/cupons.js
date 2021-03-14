@@ -25,7 +25,7 @@ router.post("/apply", verifyToken, tryCatch(controller.apply));
 
 router.patch("/:id", verifyToken, checkIfSeller, tryCatch(controller.updateCupon));
 
-router.delete("/:id", verifyToken, checkIfAdmin, tryCatch(controller.deleteCupon));
+router.delete("/:id", verifyToken, checkIfSeller, tryCatch(controller.deleteCupon));
 
 router.post("/", verifyToken, checkIfSeller, tryCatch(controller.createCupon));
 
