@@ -1,6 +1,11 @@
 const Edition = require("../models/Edition");
 let controller = {};
 
+controller.getOneEdition = async (req,res) => {
+	const {id} = req.params
+	const edition = await Edition.findById(id).populate('bootcamp')
+	return res.status(200).json(edition)
+}
 
 controller.getEditions = async (req, res) => {
 	let editions = [];
@@ -16,7 +21,7 @@ controller.getEditions = async (req, res) => {
 		return res.status(200).json({editions})
 	}
 	// si no hay query params mando todos
-	editions = await Edition.find();
+	editions = await Edition.find({active:true});
 	res.status(200).json(editions)
 };
 

@@ -10,6 +10,8 @@ function tryCatch(fn) {
 
 router.get("/", tryCatch(controller.getEditions) );
 
+router.get("/:id", tryCatch(controller.getOneEdition) );
+
 router.post("/", tryCatch(controller.createEdition) );
 
 router.patch("/:id", tryCatch(controller.updateEdition) );

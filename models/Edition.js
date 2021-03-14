@@ -2,6 +2,14 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const editionSchema = new Schema({
+	active:{
+		type: Boolean,
+		default:false
+	},
+	bootcamp:{
+		type: Schema.Types.ObjectId,
+		ref:'Bootcamp'
+	},
 	title:{
 		type: String,
 		required:true
@@ -29,19 +37,7 @@ const editionSchema = new Schema({
 	},
 	onSaturday: {
 		type: Boolean
-	},
-	// timetable: [
-	// 	{
-	// 		day: {
-	// 			type: String,
-	// 			required: "Agrega que dia que será el curso"
-	// 		},
-	// 		schedule: {
-	// 			type: String,
-	// 			required: "Agrega el horario del curso"
-	// 		}
-	// 	}
-	// ]
+	}
 }, {
 	timestamps: true
 });
