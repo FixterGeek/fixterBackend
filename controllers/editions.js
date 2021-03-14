@@ -17,11 +17,11 @@ controller.getEditions = async (req, res) => {
 		query["$or"] = queryParams.map(key => {
 			return {[key]: req.query[key]}
 		});
-		editions = await Edition.find(query);
+		editions = await Edition.find(query).populate('bootcamp');
 		return res.status(200).json(editions)
 	}
 	// si no hay query params mando todos
-	editions = await Edition.find({active:true});
+	editions = await Edition.find({active:true}).populate('bootcamp');
 	res.status(200).json(editions)
 };
 
