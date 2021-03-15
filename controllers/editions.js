@@ -4,6 +4,7 @@ let controller = {};
 
 controller.getSelfEditions = async (req,res) => {
 	const {user} = req
+	// lowercase
 	const userWithEditions = await User.findById(user._id).populate({path:'editions', populate:'bootcamp'})
 	return res.status(200).json(userWithEditions)
 }
