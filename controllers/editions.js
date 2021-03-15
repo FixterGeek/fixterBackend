@@ -1,4 +1,5 @@
 const Edition = require("../models/Edition");
+const User = require("../models/User");
 let controller = {};
 
 controller.getSelfEditions = async (req,res) => {
