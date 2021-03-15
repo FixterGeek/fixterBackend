@@ -219,8 +219,8 @@ controller.hibrid = async (req, res) => {
 					bootcampTitle: bootcamp.title,
 				});
 				// create student
-				return User.findByIdAndUpdate(
-					user._id,
+				return User.findOneAndUpdate(
+					{_id:user._id,editions: { $ne: bootcampId }}
 					{ $push: { editions: bootcampId } }
 				)
 			})
