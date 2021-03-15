@@ -166,8 +166,8 @@ controller.group = (req, res) => {
 
 controller.hibrid = async (req, res) => {
 	const {
-		// tel,
-		fullName,
+		phone,
+		cardName,
 		email,
 		tokenId,
 		bootcampId,
@@ -187,8 +187,8 @@ controller.hibrid = async (req, res) => {
 	const conektaObject = {
 		currency: "MXN",
 		customer_info: {
-			name: fullName,
-			// phone: tel,
+			name: cardName,
+			phone,
 			email: email
 		},
 		line_items: [
@@ -216,7 +216,7 @@ controller.hibrid = async (req, res) => {
 				// send Email:
 				inscriptionMail({
 					email,
-					displayName: fullName,
+					displayName: cardName,
 					bootcampTitle: bootcamp.title,
 				});
 				// create student
