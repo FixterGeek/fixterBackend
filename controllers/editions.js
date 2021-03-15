@@ -1,6 +1,12 @@
 const Edition = require("../models/Edition");
 let controller = {};
 
+controller.getSelfEditions = async (req,res) => {
+	const {user} = req
+	const userWithEditions = await User.findById(user._id).populate({path:'editions', populate:'bootcamp'})
+	return res.status(200).json(userWithEditions)
+}
+
 controller.getOneEdition = async (req,res) => {
 	const {id} = req.params
 	const edition = await Edition.findById(id).populate('bootcamp')

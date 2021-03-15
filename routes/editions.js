@@ -1,12 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const controller = require("../controllers/editions");
+const { verifyToken } = require("../helpers/jwt");
 
 function tryCatch(fn) {
 	return function(req, res, next) {
 		return fn(req, res).catch(e => next(e));
 	};
 }
+
+router.get("/self", verifyToken, tryCatch(controller.getSelfEditions) );
 
 router.get("/", tryCatch(controller.getEditions) );
 
