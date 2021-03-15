@@ -3,6 +3,7 @@ let User = require("../models/User");
 let Cupon = require("../models/Cupon");
 let Student = require("../models/Student");
 let Bootcamp = require("../models/Bootcamp");
+const Edition = require('../models/Edition')
 let Order = require("../models/Order");
 //let { generateToken } = require("../helpers/jwt");
 const conekta = require("conekta");
@@ -160,6 +161,80 @@ controller.group = (req, res) => {
 			});
 	}); // conecta create
 };
+
+//2021
+
+controller.hibrid = async (req, res) => {
+	const {
+		// tel,
+		fullName,
+		email,
+		tokenId,
+		bootcampId,
+		monthly_installments,
+	} = req.body;
+	const user = req.user;
+	let bootcamp = await Edition.findById(bootcampId);
+	let payment_method = {
+		type: "card",
+		token_id: tokenId
+	};
+	if (monthly_installments > 2)
+		payment_method.monthly_installments = monthly_installments;
+	const chargeObj = {
+		payment_method,
+	};
+	const conektaObject = {
+		currency: "MXN",
+		customer_info: {
+			name: fullName,
+			// phone: tel,
+			email: email
+		},
+		line_items: [
+			{
+				name: bootcamp.title,
+				unit_price: Number(bootcamp.price) * 100,
+				quantity: 1,
+			},
+		],
+		charges: [chargeObj]
+	};
+	conekta.Order.create(conektaObject, function (err, order) {
+		if (err) {
+			console.log("conektaerror", err);
+			return res.status(400).json(err);
+		}
+		Order.create({
+			products: [{ model: "Bootcamp", id: bootcampId }],
+			conektaId: order._id,
+			user: user._id,
+			total: bootcamp.price,
+			paid: true,
+		})
+			.then((o) => {
+				// send Email:
+				inscriptionMail({
+					email,
+					displayName: fullName,
+					bootcampTitle: bootcamp.title,
+				});
+				// create student
+				return User.findByIdAndUpdate(
+					user._id,
+					{ $push: { editions: bootcampId } }
+				)
+			})
+			.then(() => {
+				return res.status(201).json(order)
+			})
+			.catch((e) => {
+				console.log(e);
+				return res.status(400).json(e);
+			});
+	}); // conecta create
+};
+// 2021 //
 
 controller.bootcamp = async (req, res) => {
 	const {

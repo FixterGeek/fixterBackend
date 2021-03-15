@@ -37,6 +37,10 @@ let userSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Bootcamp"
     }],
+    editions: [{
+      type: Schema.Types.ObjectId,
+      ref: "Edition"
+    }],
     homeworks: Object,
     country: String,
     city: String,

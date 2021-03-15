@@ -11,6 +11,7 @@ function tryCatch(fn) {
 }
 
 router.post("/", verifyToken, controller.pay);
+router.post("/bootcamp/hibrid", verifyToken, controller.hibrid);
 router.post("/bootcamp/online", verifyToken, controller.bootcamp);
 router.post("/bootcamp/group", controller.group);
 router.post("/bootcamp/promo", verifyToken, controller.promo);
