@@ -186,7 +186,7 @@ controller.hibrid = async (req, res) => {
 	};
 	// if coupon
 	let totalAmount = Number(bootcamp.price)
-	if(coupon){
+	if(coupon){ // check for validity
 		const cou = await Cupon.findOne({name:coupon})
 		if(cou && cou.amount){
 			totalAmount = totalAmount - Number(cou.amount)
@@ -204,7 +204,7 @@ controller.hibrid = async (req, res) => {
 		line_items: [
 			{
 				name: bootcamp.title,
-				unit_price: totalAmount * 100
+				unit_price: totalAmount * 100,
 				quantity: 1,
 			},
 		],
