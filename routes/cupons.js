@@ -21,14 +21,11 @@ function checkIfSeller(req, res, next) {
 	res.status(301).json({ message: "No tienes authorización" })
 }
 
+router.get("/:name/validate", tryCatch(controller.validateCoupon));
 router.post("/apply", verifyToken, tryCatch(controller.apply));
-
 router.patch("/:id", verifyToken, checkIfSeller, tryCatch(controller.updateCupon));
-
 router.delete("/:id", verifyToken, checkIfSeller, tryCatch(controller.deleteCupon));
-
 router.post("/", verifyToken, checkIfSeller, tryCatch(controller.createCupon));
-
 router.get("/", verifyToken, checkIfSeller, tryCatch(controller.getCupons));
 
 
