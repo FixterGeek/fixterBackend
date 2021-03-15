@@ -168,7 +168,6 @@ controller.hibrid = async (req, res) => {
 	const {
 		phone,
 		cardName,
-		email,
 		tokenId,
 		bootcampId,
 		monthly_installments,
@@ -189,7 +188,7 @@ controller.hibrid = async (req, res) => {
 		customer_info: {
 			name: cardName,
 			phone,
-			email: email
+			email: user.email
 		},
 		line_items: [
 			{
@@ -215,7 +214,7 @@ controller.hibrid = async (req, res) => {
 			.then((o) => {
 				// send Email:
 				inscriptionMail({
-					email,
+					email:user.email,
 					displayName: cardName,
 					bootcampTitle: bootcamp.title,
 				});
