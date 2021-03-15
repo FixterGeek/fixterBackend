@@ -166,6 +166,7 @@ controller.group = (req, res) => {
 
 controller.hibrid = async (req, res) => {
 	const {
+		coupon,
 		phone,
 		cardName,
 		tokenId,
@@ -183,6 +184,16 @@ controller.hibrid = async (req, res) => {
 	const chargeObj = {
 		payment_method,
 	};
+	// if coupon
+	let totalAmount = Number(bootcamp.price)
+	if(coupon){
+		const cou = await Cupon.findOne({name:coupon})
+		if(cou && cou.amount){
+			totalAmount = totalAmount - Number(cou.amount)
+		} else if(cou && cou.value) {
+			totalAmount = totalAmount - (totalAmount * Number(cou.value)/100)
+		}
+	}
 	const conektaObject = {
 		currency: "MXN",
 		customer_info: {
@@ -193,7 +204,7 @@ controller.hibrid = async (req, res) => {
 		line_items: [
 			{
 				name: bootcamp.title,
-				unit_price: Number(bootcamp.price) * 100,
+				unit_price: totalAmount * 100
 				quantity: 1,
 			},
 		],
