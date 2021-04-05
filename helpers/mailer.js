@@ -10,6 +10,10 @@ let transport = nodemailer.createTransport({
 	},
 });
 
+const sellPromotion = hbs.compile(
+	fs.readFileSync((__dirname, "./views/mail/sell.hbs"), "utf8")
+);
+
 const inscriptionToBootcamp = hbs.compile(
 	fs.readFileSync((__dirname, "./views/mail/inscripcion.hbs"), "utf8")
 );
@@ -59,6 +63,20 @@ exports.contactFormHorizon = ({
 
 			// 	`
 			// })
+		})
+		.catch((e) => console.log(e));
+};
+
+exports.sellAndPromotion = (emails) => {
+	return transport
+		.sendMail({
+			from: "fixtermailer@gmail.com",
+			subject: "👾 Nuevo bootcamp híbrido 🤖",
+			bcc: [emails],
+			html: sellPromotion({})
+		})
+		.then((r) => {
+			console.log(r);
 		})
 		.catch((e) => console.log(e));
 };
