@@ -19,8 +19,13 @@ router.post('/hibrid', (req, res) => {
     User.find({
       _id: { $in: ['5c6a4f9c79c3a60017bbeb65', '5d6361d2808c1c0017726001'] },
     }),
+    User,
   ).then(({ items, ...result }) => {
-    sellAndPromotion(items.map((item) => item.email))
+    // sellAndPromotion(items.map((item) => item.email))
+    console.log(
+      'items: ',
+      items.map((i) => i.email),
+    )
     res.status(200).send(result)
   })
 })
