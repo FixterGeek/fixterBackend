@@ -9,26 +9,50 @@ const {
   contactFormArango,
   contactFormHorizon,
   sellAndPromotion,
+  sendLaunchBootcamp,
 } = require('../helpers/mailer')
 
 //5c6a4f9c79c3a60017bbeb65
 
 router.post('/hibrid', (req, res) => {
-  promisePaginator(
-    req.body,
-    User.find({
-      _id: { $in: ['5c6a4f9c79c3a60017bbeb65', '5d6361d2808c1c0017726001'] },
-    }),
-    User,
-  ).then(({ items, ...result }) => {
-    // sellAndPromotion(items.map((item) => item.email))
-    console.log(
-      'items: ',
-      items.map((i) => i.email),
-    )
-    res.status(200).send(result)
-  })
+  // const emails = [
+  //   'ands.monris@gmail.com',
+  //   'luna.vazquezv@gmail.com',
+  //   'mauricio_cano@outlook.es',
+  //   'javaz_15@hotmail.com',
+  //   'ands.monris@gmail.com',
+  //   'bremin11.20.93@gmail.com',
+  //   'varaty7@gmail.com',
+  //   'astridgutierrezm@gmail.com',
+  //   'bernardinoveronica@gmail.com',
+  //   'akjassoj@outlook.com',
+  //   'carlamafc@gmail.com',
+  //   'adrianagrisss@gmail.com',
+  //   's.e.jugr@gmail.com',
+  //   'zayrajero@gmail.com',
+  // 'pepediaz2099@hotmail.com',
+  // ]
+  const emails = ['pepediaz2099@hotmail.com']
+  // sendLaunchBootcamp(emails)
+  return res.status(200).send('ok')
 })
+
+// router.post('/hibrid', (req, res) => {
+//   promisePaginator(
+//     req.body,
+//     User.find({
+//       _id: { $in: ['5c6a4f9c79c3a60017bbeb65', '5d6361d2808c1c0017726001'] },
+//     }),
+//     User,
+//   ).then(({ items, ...result }) => {
+//     // sellAndPromotion(items.map((item) => item.email))
+//     console.log(
+//       'items: ',
+//       items.map((i) => i.email),
+//     )
+//     res.status(200).send(result)
+//   })
+// })
 
 router.post('/horizonte/contacto', (req, res, next) => {
   if (req.body.token !== 'noLine')

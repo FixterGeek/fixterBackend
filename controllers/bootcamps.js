@@ -1,32 +1,33 @@
-const Bootcamp = require("../models/Bootcamp");
-const User = require("../models/User");
-const Week = require("../models/Week");
-const Exam = require("../models/Exam");
-const Learning = require("../models/Learning");
-const Homework = require("../models/Homework");
-const mongoose = require("mongoose")
+const Bootcamp = require('../models/Bootcamp')
+const User = require('../models/User')
+const Week = require('../models/Week')
+const Exam = require('../models/Exam')
+const Learning = require('../models/Learning')
+const Homework = require('../models/Homework')
+const mongoose = require('mongoose')
 
+let controller = {}
 
-let controller = {};
-
-
-controller.getBootcamps = async (req, res) => { // asegurarse de que no enviamos las respuestas del examen ------------------------------
+controller.getBootcamps = async (req, res) => {
+  // asegurarse de que no enviamos las respuestas del examen ------------------------------
   //let bootcamps = [];
-  let queryParams = Object.keys(req.query);
+  let queryParams = Object.keys(req.query)
   // filtrando cursos activos por query params
   if (queryParams.length > 0) {
-    let query = { active: true };
+    let query = { active: true }
     //creado el query dinamicamente
-    query["$or"] = queryParams.map(key => {
+    query['$or'] = queryParams.map((key) => {
       return { [key]: req.query[key] }
-    });
-    bootcamps = await Bootcamp.find(query);
+    })
+    bootcamps = await Bootcamp.find(query)
     return res.status(200).json({ bootcamps })
   }
   // si no hay query params mando todos los activos
-  bootcamps = await Bootcamp.find({ active: true }).populate('weeks').populate('exam'); // quitamos las learnings DEBES BORRAR EL EXAMEN PORQUE LLEVA RESPUESTAS
+  bootcamps = await Bootcamp.find({ active: true })
+    .populate('weeks')
+    .populate('exam') // quitamos las learnings DEBES BORRAR EL EXAMEN PORQUE LLEVA RESPUESTAS
   res.status(200).json({ bootcamps })
-};
+}
 
 controller.getBootcampAdmin = async (req, res) => {
   let { id } = req.params
@@ -40,23 +41,29 @@ controller.getBootcampAdmin = async (req, res) => {
 }
 
 controller.getSingleBootcamp = async (req, res) => {
-
   // get id and user
   let { id } = req.params
   let { user } = req
   let bootcamp = await Bootcamp.findById(id).populate('weeks')
-  let learnings = await Learning.find({ week: bootcamp.weeks[0]._id }, { title: 1 }) // cuando no hay semanas falla
+  let learnings = await Learning.find(
+    { week: bootcamp.weeks[0]._id },
+    { title: 1 },
+  ) // cuando no hay semanas falla
   bootcamp.weeks[0].learnings = learnings
   // if user
   if (user) {
-    let enrolled = user.bootcamps.find(_id => _id.toString() === bootcamp._id.toString())
-    if (!enrolled) {
-      return res.status(200).json(bootcamp)
-    }
+    // let enrolled = user.bootcamps.find(
+    //   (_id) => _id.toString() === bootcamp._id.toString(),
+    // )
+
+    // ACTUALIZA ESTA SEGURIDAD
+    // if (!enrolled) {
+    //   return res.status(200).json(bootcamp)
+    // }
 
     // hay que enviar solo las semanas activas... en base a la fecha
 
-    let boot = await Bootcamp.findById(id).populate("weeks")
+    let boot = await Bootcamp.findById(id).populate('weeks')
     //prework
     let learnings = await Learning.find({ week: bootcamp.weeks[0]._id })
     let homeworks = await Homework.find({ week: bootcamp.weeks[0]._id })
@@ -133,7 +140,9 @@ controller.getWeek = async (req, res) => {
 
 controller.updateWeek = async (req, res) => {
   let { id } = req.params
-  let week = await Week.findByIdAndUpdate(id, req.body, { new: true }).populate('bootcamp')
+  let week = await Week.findByIdAndUpdate(id, req.body, { new: true }).populate(
+    'bootcamp',
+  )
   let w = await week.toObject()
   let learnings = await Learning.find({ week: id })
   w.learnings = learnings
@@ -147,7 +156,9 @@ controller.saveLearning = async (req, res) => {
   if (!id) {
     let learning = await Learning.create(body)
     // add order
-    await Week.findByIdAndUpdate(learning.week, { $push: { itemsOrder: learning._id } })
+    await Week.findByIdAndUpdate(learning.week, {
+      $push: { itemsOrder: learning._id },
+    })
     // add order
     return res.status(201).json(learning)
   } else {
@@ -161,9 +172,11 @@ controller.deleteLearning = async (req, res) => {
   let learning = await Learning.findByIdAndDelete(id)
   //borramos del orden
   let week = await Week.findById(learning.week)
-  let order = week.itemsOrder.filter(i => i.toString() !== learning._id.toString())
+  let order = week.itemsOrder.filter(
+    (i) => i.toString() !== learning._id.toString(),
+  )
   week.itemsOrder = [...order]
-  await week.markModified('itemsOrder');
+  await week.markModified('itemsOrder')
   await week.save()
   //borramos el orden
   return res.status(204).json(learning)
@@ -206,7 +219,7 @@ controller.gradeExam = async (req, res) => {
   // let user = await User.findById(req.user._id)
   // if (req.user.exams && req.user.exams[id] > 2) return res.status(403).json({ message: "Ya haz respondido este examen" })
   let exist = await Exam.findOne({ bootcamp: id })
-  if (!exist) return res.status(204).json({ message: "No hay examen asociado" })
+  if (!exist) return res.status(204).json({ message: 'No hay examen asociado' })
   let exam = await exist.toObject()
   let { questions } = exam
   let total = questions.length
@@ -215,12 +228,21 @@ controller.gradeExam = async (req, res) => {
   for (let [i, q] of questions.entries()) {
     if (q.correct == answers[i]) grade++
   }
-  let result = { bootcamp: exam.bootcamp, string: `${grade}/${total}`, grade, approved: ((grade * 10 / total) > 8) }
+  let result = {
+    bootcamp: exam.bootcamp,
+    string: `${grade}/${total}`,
+    grade,
+    approved: (grade * 10) / total > 8,
+  }
   // guardamos resultado
   if (!req.user.exams) req.user.exams = {}
-  if (req.user.exams[id]) req.user.exams[id] = { attempts: req.user.exams[id].attempts + 1, ...result }
+  if (req.user.exams[id])
+    req.user.exams[id] = {
+      attempts: req.user.exams[id].attempts + 1,
+      ...result,
+    }
   else req.user.exams[id] = { attempts: 1, ...result }
-  req.user.markModified('exams');
+  req.user.markModified('exams')
   await req.user.save()
   return res.status(200).json(result)
 }
@@ -245,13 +267,16 @@ controller.getExam = async (req, res) => {
     let exam = await Exam.findOne({ bootcamp: id })
     if (exam) {
       exam = await exam.toObject()
-      exam.answers = exam.questions.map(q => {
+      exam.answers = exam.questions.map((q) => {
         delete q.correct
         return q
       })
       // verify user
       if (user.exams && user.exams[id] && user.exams[id].attempts > 1) {
-        return res.status(401).json({ message: "Ya no puedes responder este examen", result: user.exams[id] })
+        return res.status(401).json({
+          message: 'Ya no puedes responder este examen',
+          result: user.exams[id],
+        })
       }
       if (user.exams && user.exams[id]) {
         exam.attempts = user.exams[id].attempts
@@ -263,7 +288,7 @@ controller.getExam = async (req, res) => {
   let exam = await Exam.findById(id)
   if (exam) {
     exam = await exam.toObject()
-    exam.answers = exam.questions.map(q => {
+    exam.answers = exam.questions.map((q) => {
       delete q.correct
       return q
     })
@@ -272,5 +297,4 @@ controller.getExam = async (req, res) => {
   res.status(200).json(exam)
 }
 
-
-module.exports = controller;
+module.exports = controller
