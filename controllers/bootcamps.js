@@ -51,49 +51,50 @@ controller.getSingleBootcamp = async (req, res) => {
   ) // cuando no hay semanas falla
   bootcamp.weeks[0].learnings = learnings
   // if user
-  if (user) {
-    // let enrolled = user.bootcamps.find(
-    //   (_id) => _id.toString() === bootcamp._id.toString(),
-    // )
+  // if (user) {
+  // let enrolled = user.bootcamps.find(
+  //   (_id) => _id.toString() === bootcamp._id.toString(),
+  // )
 
-    // ACTUALIZA ESTA SEGURIDAD
-    // if (!enrolled) {
-    //   return res.status(200).json(bootcamp)
-    // }
+  // ACTUALIZA ESTA SEGURIDAD
+  // if (!enrolled) {
+  //   return res.status(200).json(bootcamp)
+  // }
 
-    // hay que enviar solo las semanas activas... en base a la fecha
+  // hay que enviar solo las semanas activas... en base a la fecha
 
-    let boot = await Bootcamp.findById(id).populate('weeks')
-    //prework
-    let learnings = await Learning.find({ week: bootcamp.weeks[0]._id })
-    let homeworks = await Homework.find({ week: bootcamp.weeks[0]._id })
-    boot.weeks[0].learnings = learnings
-    boot.weeks[0].homeworks = homeworks
-    // week1
-    let learnings1 = await Learning.find({ week: bootcamp.weeks[1]._id })
-    let homeworks1 = await Homework.find({ week: bootcamp.weeks[1]._id })
-    boot.weeks[1].learnings = learnings1
-    boot.weeks[1].homeworks = homeworks1
+  let boot = await Bootcamp.findById(id).populate('weeks')
+  //prework
+  let learnings = await Learning.find({ week: bootcamp.weeks[0]._id })
+  let homeworks = await Homework.find({ week: bootcamp.weeks[0]._id })
+  boot.weeks[0].learnings = learnings
+  boot.weeks[0].homeworks = homeworks
+  // week1
+  let learnings1 = await Learning.find({ week: bootcamp.weeks[1]._id })
+  let homeworks1 = await Homework.find({ week: bootcamp.weeks[1]._id })
+  boot.weeks[1].learnings = learnings1
+  boot.weeks[1].homeworks = homeworks1
 
-    // week2
-    let learnings2 = await Learning.find({ week: bootcamp.weeks[2]._id })
-    let homeworks2 = await Homework.find({ week: bootcamp.weeks[2]._id })
-    boot.weeks[2].learnings = learnings2
-    boot.weeks[2].homeworks = homeworks2
-    // week3
-    let learnings3 = await Learning.find({ week: bootcamp.weeks[3]._id })
-    let homeworks3 = await Homework.find({ week: bootcamp.weeks[3]._id })
-    boot.weeks[3].learnings = learnings3
-    boot.weeks[3].homeworks = homeworks3
-    // week4
-    let learnings4 = await Learning.find({ week: bootcamp.weeks[4]._id })
-    let homeworks4 = await Homework.find({ week: bootcamp.weeks[4]._id })
-    boot.weeks[4].learnings = learnings4
-    boot.weeks[4].homeworks = homeworks4
+  // week2
+  let learnings2 = await Learning.find({ week: bootcamp.weeks[2]._id })
+  let homeworks2 = await Homework.find({ week: bootcamp.weeks[2]._id })
+  boot.weeks[2].learnings = learnings2
+  boot.weeks[2].homeworks = homeworks2
+  // week3
+  let learnings3 = await Learning.find({ week: bootcamp.weeks[3]._id })
+  let homeworks3 = await Homework.find({ week: bootcamp.weeks[3]._id })
+  boot.weeks[3].learnings = learnings3
+  boot.weeks[3].homeworks = homeworks3
+  // week4
+  let learnings4 = await Learning.find({ week: bootcamp.weeks[4]._id })
+  let homeworks4 = await Homework.find({ week: bootcamp.weeks[4]._id })
+  boot.weeks[4].learnings = learnings4
+  boot.weeks[4].homeworks = homeworks4
 
-    return res.status(200).json(boot)
-  }
-  return res.status(200).json(bootcamp)
+  return res.status(200).json(boot)
+  // }
+  // return res.status(200).json(bootcamp)
+
   // let { id } = req.params
   // let bootcamp = await Bootcamp.findById(id).populate('weeks')
   // let learnings = await Learning.find({ week: bootcamp.weeks[0]._id }, { title: 1 })
