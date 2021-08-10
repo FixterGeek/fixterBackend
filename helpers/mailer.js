@@ -160,35 +160,22 @@ exports.contactFormReceived = (
     .catch((e) => console.log(e))
 }
 
-exports.contactFormArango = ({ email, name, budget, tel, numPeople, date }) => {
+exports.contactFormSpike = ({ email, name, phone, message, org, website }) => {
   transport
     .sendMail({
-      subject: '👾🤖¡Tienes un nuevo mensaje!😎',
-      bcc: ['eventos@arangorestaurante.com'],
-      html: `<h3>¡Tienes un nuevo mensaje!</h3>
-			<p> Nombre: ${name} </p>
-			<p> Correo: ${email} </p>
-			<p> Teléfono: ${tel}  </p>
-			<p> Número de personas:  ${numPeople} </p>
-			<p> Presupuesto por persona: ${budget} </p>
-			<p> Fecha: ${date} </p>
+      subject: 'You have a new message from Spike Stinger website',
+      bcc: ['brenda@fixter.org'],
+      html: `<h3>¡You've recieved a new message!</h3>
+			<p> Name: ${name} </p>
+			<p> Email: ${email} </p>
+			<p> Phone: ${phone}  </p>
+			<p> ${message ? 'Message:' + message : ''} </p>
+			<p> ${org ? 'Organization name: ' + org : ''} </p>
+			<p> ${website ? 'Website: ' + website : ''} </p>
 			`,
     })
     .then((r) => {
       console.log(r)
-      //return transport
-      // .sendMail({
-      // 	subject: "👾🤖¡Alguien nos ha contactado!😎",
-      // 	bcc: ["contacto@fixter.org", "brenda@fixter.org"],
-      // 	html: `
-      // 	<h2> Fecha: ${new Date()} </h2>
-      // 		<h2> Nombre: ${displayName} </h2>
-      // 		<h2> Teléfono: ${tel} </h2>
-      // 		<h2> Email: ${email} </h2>
-      // 		<h2> Mensaje: ${text} </h2>
-
-      // 	`
-      // })
     })
     .catch((e) => console.log(e))
 }

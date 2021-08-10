@@ -6,7 +6,7 @@ const { promisePaginator } = require('../helpers/paginator')
 
 const {
   contactFormReceived,
-  contactFormArango,
+  contactFormSpike,
   contactFormHorizon,
   sellAndPromotion,
   sendLaunchBootcamp,
@@ -61,10 +61,9 @@ router.post('/horizonte/contacto', (req, res, next) => {
   res.status(200).send({ message: 'Sending' })
 })
 
-router.post('/arango/contacto', (req, res, next) => {
-  if (req.body.token !== 'cocinaDeRaices')
-    return res.status(403).send({ message: 'Forbiden' })
-  contactFormArango(req.body)
+router.post('/spike/contacto', (req, res, next) => {
+  if (req.body.token !== 'hyruleHolanda') { return res.status(403).send({ message: 'Forbiden' }) }
+  contactFormSpike(req.body)
   res.status(200).send({ message: 'Sending' })
 })
 
