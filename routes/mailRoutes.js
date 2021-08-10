@@ -62,6 +62,7 @@ router.post('/horizonte/contacto', (req, res, next) => {
 })
 
 router.post('/spike/contacto', (req, res, next) => {
+  console.log(req.body)
   if (req.body.token !== 'hyruleHolanda') { return res.status(403).send({ message: 'Forbiden' }) }
   contactFormSpike(req.body)
   res.status(200).send({ message: 'Sending' })
