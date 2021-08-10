@@ -67,10 +67,10 @@ app.use(passport.session());
 app.use(
 	cors({
 		origin: [
-			"http://localhost:3000",
 			"https://fixter.camp",
 			"https://www.fixter.camp",
 			"https://spikestingerinternational.com",
+			"https://technicsproduction.nl",
 			"https://www.arangorestaurante.com",
 			"http://localhost:3000", // solo development
 			"https://horizontemx.com",
