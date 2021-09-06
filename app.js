@@ -71,7 +71,8 @@ app.use(
 			"https://www.fixter.camp",
 			"https://spikestingerinternational.com",
 			"https://technicsproduction.nl",
-			"https://www.arangorestaurante.com",
+			"https://spikestinger.us/",
+			// "https://www.arangorestaurante.com",
 			"http://localhost:3000", // solo development
 			"https://horizontemx.com",
 		],
