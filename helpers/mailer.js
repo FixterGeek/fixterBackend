@@ -184,8 +184,8 @@ exports.contactFormSpikeUSA = ({ email, name, phone, message, org, website }) =>
   transport
     .sendMail({
       subject: 'You have a new message from Spike Stinger website',
-      // bcc: ['jhon@spikestingerinternational.com'],
-      bcc: ['brenda@fixter.org'],
+      bcc: ['jhon@spikestingerinternational.com'],
+      // bcc: ['brenda@fixter.org'],
       html: `<h3>¡You've recieved a new message!</h3>
 			<p> Name: ${name} </p>
 			<p> Email: ${email} </p>
