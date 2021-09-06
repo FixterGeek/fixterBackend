@@ -164,7 +164,27 @@ exports.contactFormSpike = ({ email, name, phone, message, org, website }) => {
   transport
     .sendMail({
       subject: 'You have a new message from Spike Stinger website',
-      bcc: ['brenda@fixter.org'],
+      bcc: ['rafa@spikestingerinternational.com'],
+      html: `<h3>¡You've recieved a new message!</h3>
+			<p> Name: ${name} </p>
+			<p> Email: ${email} </p>
+			<p> Phone: ${phone}  </p>
+			<p> ${message ? 'Message:' + message : ''} </p>
+			<p> ${org ? 'Organization name: ' + org : ''} </p>
+			<p> ${website ? 'Website: ' + website : ''} </p>
+			`,
+    })
+    .then((r) => {
+      console.log(r)
+    })
+    .catch((e) => console.log(e))
+}
+
+exports.contactFormSpikeUSA = ({ email, name, phone, message, org, website }) => {
+  transport
+    .sendMail({
+      subject: 'You have a new message from Spike Stinger website',
+      bcc: ['jhon@spikestingerinternational.com'],
       html: `<h3>¡You've recieved a new message!</h3>
 			<p> Name: ${name} </p>
 			<p> Email: ${email} </p>

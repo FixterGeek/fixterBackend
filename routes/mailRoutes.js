@@ -10,6 +10,7 @@ const {
   contactFormHorizon,
   sellAndPromotion,
   sendLaunchBootcamp,
+  contactFormSpikeUSA,
 } = require('../helpers/mailer')
 
 //5c6a4f9c79c3a60017bbeb65
@@ -62,9 +63,14 @@ router.post('/horizonte/contacto', (req, res, next) => {
 })
 
 router.post('/spike/contacto', (req, res, next) => {
-  console.log(req.body)
   if (req.body.token !== 'hyruleHolanda') { return res.status(403).send({ message: 'Forbiden' }) }
   contactFormSpike(req.body)
+  res.status(200).send({ message: 'Sending' })
+})
+
+router.post('/spike/us/contacto', (req, res, next) => {
+  if (req.body.token !== 'hyruleUSA') { return res.status(403).send({ message: 'Forbiden' }) }
+  contactFormSpikeUSA(req.body)
   res.status(200).send({ message: 'Sending' })
 })
 
