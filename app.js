@@ -73,7 +73,7 @@ app.use(
 			"https://technicsproduction.nl",
 			"https://spikestinger.us",
 			// "https://www.arangorestaurante.com",
-			"http://localhost:3000", // solo development
+			// "http://localhost:3000", // solo development
 			"https://horizontemx.com",
 		],
 	})

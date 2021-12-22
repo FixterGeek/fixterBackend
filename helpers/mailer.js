@@ -10,9 +10,9 @@ let transport = nodemailer.createTransport({
   },
 })
 
-// const sellPromotion = hbs.compile(
-//   fs.readFileSync((__dirname, './views/mail/sell.hbs'), 'utf8'),
-// )
+const disciplineChallenge = hbs.compile(
+  fs.readFileSync((__dirname, './views/mail/discipline-challenge.hbs'), 'utf8'),
+)
 
 const launchBootcamp = hbs.compile(
   fs.readFileSync((__dirname, './views/mail/launch.hbs'), 'utf8'),
@@ -71,19 +71,19 @@ exports.contactFormHorizon = ({
     .catch((e) => console.log(e))
 }
 
-// exports.sellAndPromotion = (emails) => {
-//   return transport
-//     .sendMail({
-//       from: 'fixtermailer@gmail.com',
-//       subject: '👾 Nuevo bootcamp híbrido 🤖',
-//       bcc: [emails],
-//       html: sellPromotion({}),
-//     })
-//     .then((r) => {
-//       console.log(r)
-//     })
-//     .catch((e) => console.log(e))
-// }
+exports.sendDisciplineChallenge = (emails) => {
+  return transport
+    .sendMail({
+      from: 'fixtermailer@gmail.com',
+      subject: '👾 Cambia tu futúro 🤖',
+      bcc: [emails],
+      html: disciplineChallenge({}),
+    })
+    .then((r) => {
+      console.log(r)
+    })
+    .catch((e) => console.log(e))
+}
 
 exports.sendLaunchBootcamp = (emails) => {
   return transport

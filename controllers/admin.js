@@ -3,7 +3,7 @@ let controller = {};
 
 
 controller.getUsers = async (req, res) => {
-  let items = await User.find().populate('bootcamps')
+  let items = await User.find().populate('bootcamps').sort('-updatedAt')
   return res.status(200).json(items)
 };
 
