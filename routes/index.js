@@ -1,4 +1,5 @@
 const express = require("express");
+const { verifyToken } = require("../helpers/jwt");
 const { sendDisciplineChallenge } = require("../helpers/mailer");
 const router = express.Router();
 const stripe = require('stripe')('sk_test_51K6dXmJ7Zwl77LqntfyjDm7s6ZFZYuiCB2G00swjcN8VzyYsZZfFiWOfYcMnveiixSaVtYsqdCPipWAonEMCaREy00rG91msfD');
@@ -16,9 +17,9 @@ router.get("/", (req, res, next) => {
   });
 });
 
-router.get('/create-checkout-session', async (req, res) => {
+router.get('/create-checkout-session', verifyToken, async (req, res) => {
   const session = await stripe.checkout.sessions.create({
-    customer_email: req.user.email,
+    customer_email: req.user ? req.user.email : '',
     line_items: [
       {
         // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
