@@ -1,6 +1,9 @@
 const express = require("express");
 const { sendDisciplineChallenge } = require("../helpers/mailer");
 const router = express.Router();
+const stripe = require('stripe')('sk_test_51K6dXmJ7Zwl77LqntfyjDm7s6ZFZYuiCB2G00swjcN8VzyYsZZfFiWOfYcMnveiixSaVtYsqdCPipWAonEMCaREy00rG91msfD');
+
+const CLIENT_DOMAIN = 'https://localhost:3000/pricing';
 
 /* GET home page */
 router.get("/", (req, res, next) => {
@@ -12,6 +15,24 @@ router.get("/", (req, res, next) => {
     bliss: "t(*_*t)"
   });
 });
+
+router.get('/create-checkout-session', async (req, res) => {
+  const session = await stripe.checkout.sessions.create({
+    customer_email: req.user.email,
+    line_items: [
+      {
+        // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+        price: req.query.id,
+        quantity: 1,
+      },
+    ],
+    mode: 'subscription',
+    success_url: `${CLIENT_DOMAIN}?success=true`,
+    cancel_url: `${CLIENT_DOMAIN}?canceled=true`,
+  });
+
+  res.redirect(303, session.url);
+})
 
 // mail
 router.get("/blissi", (req, res, next) => {
@@ -41,6 +62,7 @@ router.get("/blissi", (req, res, next) => {
     'yann.mhdz@gmail.com',
     'tesah74@gmail.com'
   ] // sent...
+  const emailsThree = ['pcromero2207@hotmail.com']
   sendDisciplineChallenge([])
   res.json({
     developedBy: "FixterGeek",
