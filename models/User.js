@@ -4,9 +4,9 @@ let passportLocalMongoose = require("passport-local-mongoose");
 
 let userSchema = new Schema(
   {
-    payments:[
+    payments: [
       {
-        type:String
+        type: String
       }
     ],
     changePass: {
@@ -19,9 +19,10 @@ let userSchema = new Schema(
     },
     role: {
       type: String,
-      enum: ["ADMIN", "SELLER", "GUEST", "PREMIUM", "STUDENT"],
+      enum: ["ADMIN", "SELLER", "GUEST", "PLUS", "STUDENT"],
       default: "GUEST"
     },
+    plusDate: Date,
     email: String,
     facebookId: String,
     googleId: String,

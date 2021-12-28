@@ -4,7 +4,7 @@ const { sendDisciplineChallenge } = require("../helpers/mailer");
 const router = express.Router();
 const stripe = require('stripe')('sk_test_51K6dXmJ7Zwl77LqntfyjDm7s6ZFZYuiCB2G00swjcN8VzyYsZZfFiWOfYcMnveiixSaVtYsqdCPipWAonEMCaREy00rG91msfD');
 
-const CLIENT_DOMAIN = 'https://localhost:3000/pricing';
+const CLIENT_DOMAIN = 'http://localhost:3000/pricing';
 
 /* GET home page */
 router.get("/", (req, res, next) => {
@@ -18,21 +18,32 @@ router.get("/", (req, res, next) => {
 });
 
 router.get('/create-checkout-session', verifyToken, async (req, res) => {
+  const today = new Date()
+  const nextYear = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate())
   const session = await stripe.checkout.sessions.create({
     customer_email: req.user ? req.user.email : '',
+    trial_end: nextYear.getTime(),
     line_items: [
       {
-        // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
         price: req.query.id,
         quantity: 1,
       },
     ],
     mode: 'subscription',
-    success_url: `${CLIENT_DOMAIN}?success=true`,
+    success_url: `https://fixtercamp.herokuapp.com/subscription?success=true&token=${req.query.token}`, // enrollamos al user aquí de una vez?
     cancel_url: `${CLIENT_DOMAIN}?canceled=true`,
   });
 
   res.redirect(303, session.url);
+})
+
+router.get('/subscription', verifyToken, async (req, res) => {
+  if (!req.query.success) {
+    res.redirect(303, `${CLIENT_DOMAIN}?canceled=true`)
+  }
+  req.user.plusDate = new Date()
+  req.user.role = 'PLUS'
+  res.redirect(303, `${CLIENT_DOMAIN}?success=true`);
 })
 
 // mail
