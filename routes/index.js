@@ -4,7 +4,8 @@ const { sendDisciplineChallenge } = require("../helpers/mailer");
 const router = express.Router();
 const stripe = require('stripe')('sk_test_51K6dXmJ7Zwl77LqntfyjDm7s6ZFZYuiCB2G00swjcN8VzyYsZZfFiWOfYcMnveiixSaVtYsqdCPipWAonEMCaREy00rG91msfD');
 
-const CLIENT_DOMAIN = 'http://localhost:3000/pricing';
+// const CLIENT_DOMAIN = 'http://localhost:3000/pricing';
+const CLIENT_DOMAIN = 'https://fixter.camp/pricing';
 
 /* GET home page */
 router.get("/", (req, res, next) => {
@@ -17,18 +18,18 @@ router.get("/", (req, res, next) => {
   });
 });
 
-router.get('/create-checkout-session', verifyToken, async (req, res) => {
-  const today = new Date()
-  const nextYear = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate())
+router.get('/create-checkout-session/yearly', verifyToken, async (req, res) => {
   const session = await stripe.checkout.sessions.create({
     customer_email: req.user ? req.user.email : '',
-    trial_end: nextYear.getTime(),
     line_items: [
       {
         price: req.query.id,
         quantity: 1,
       },
     ],
+    subscription_data: {
+      trial_period_days: 30,
+    },
     mode: 'subscription',
     success_url: `https://fixtercamp.herokuapp.com/subscription?success=true&token=${req.query.token}`, // enrollamos al user aquí de una vez?
     cancel_url: `${CLIENT_DOMAIN}?canceled=true`,
