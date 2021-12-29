@@ -86,7 +86,7 @@ router.get('/billing', verifyToken, async (req, res) => {
 })
 
 // Webhooks
-const endpointSecret = "whsec_dNelZ1O6JOwQHGWmRX8h7bUNnkHKwKzg";
+const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET
 router.post('/webhook', async (req, res) => {
 
   const sig = req.headers['stripe-signature'];
@@ -94,7 +94,7 @@ router.post('/webhook', async (req, res) => {
   try {
     event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
   } catch (err) {
-    response.status(400).send(`Webhook Error: ${err.message}`);
+    res.status(400).send(`Webhook Error: ${err.message}`);
     return;
   }
   // Handle the event
