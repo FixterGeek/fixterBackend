@@ -106,17 +106,17 @@ router.post('/webhook', bodyParser.raw({ type: 'application/json' }), async (req
       // Then define and call a function to handle the event payment_intent.succeeded
       break;
     case 'subscription_schedule.updated':
-      console.log("all event: ", event)
-      console.log("uopdate: => ", event.data.object)
+      // console.log("all event: ", event)
+      console.log("OBJECT: => ", JSON.stringify(event.data.object))
     // ... handle other event types
     default:
       console.log(`Unhandled event type ${event.type}`);
-      console.log(`Todo: ${event}`);
-      console.log(`Data: ${event.data.object}`);
+      console.log(`Todo: ${JSON.stringify(event)}`);
+      console.log(`Data Object: ${JSON.stringify(event.data.object)}`);
   }
 
   // Return a 200 response to acknowledge receipt of the event
-  response.send();
+  res.send();
 })
 
 // mail
