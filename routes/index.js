@@ -1,7 +1,6 @@
 const express = require("express");
 const { verifyToken } = require("../helpers/jwt");
 const { sendDisciplineChallenge } = require("../helpers/mailer");
-const { buffer } = require('micro')
 const router = express.Router();
 const stripe = require('stripe')('sk_test_51K6dXmJ7Zwl77LqntfyjDm7s6ZFZYuiCB2G00swjcN8VzyYsZZfFiWOfYcMnveiixSaVtYsqdCPipWAonEMCaREy00rG91msfD');
 
@@ -89,11 +88,10 @@ router.get('/billing', verifyToken, async (req, res) => {
 // Webhooks
 const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET
 router.post('/webhook', async (req, res) => {
-  const reqBuffer = await buffer(req)
   const sig = req.headers['stripe-signature'];
   let event;
   try {
-    event = stripe.webhooks.constructEvent(reqBuffer, sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
   } catch (err) {
     res.status(400).send(`Webhook Error: ${err.message}`);
     console.log(err)
