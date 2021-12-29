@@ -86,7 +86,7 @@ router.get('/billing', verifyToken, async (req, res) => {
 })
 
 // Webhooks
-const endpointSecret = "whsec_x39WEogZp9UwYBfL8Kz0UxSrderL43TZ";
+const endpointSecret = "whsec_dNelZ1O6JOwQHGWmRX8h7bUNnkHKwKzg";
 router.get('/webhook', async (req, res) => {
 
   const sig = req.headers['stripe-signature'];
