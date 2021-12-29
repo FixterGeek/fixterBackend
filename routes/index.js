@@ -75,13 +75,15 @@ router.get('/subscription', verifyToken, async (req, res) => {
 router.get('/billing', verifyToken, async (req, res) => {
   const returnUrl = `${CLIENT_DOMAIN}?success=true`;
   const customerId = req.user.subscription.customerId;
-  const portalSession = await stripe.billingPortal.sessions.create({
+  stripe.billingPortal.sessions.create({
     customer: customerId,
     return_url: returnUrl,
-  });
-  if (!portalSession) { return res.status(404) }
-  res.redirect(303, portalSession.url);
+  }).then(portalSession => {
+    res.redirect(303, portalSession.url);
 
+  }).catch(() => {
+    res.status(404)
+  })
 })
 
 // mail
