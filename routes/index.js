@@ -50,7 +50,7 @@ router.get('/create-checkout-session/monthly', verifyToken, async (req, res) => 
       },
     ],
     mode: 'subscription',
-    success_url: `${SERVER_DOMAIN}/subscription?success=true&token=${req.query.token}`, // enrollamos al user aquí de una vez?
+    success_url: `${SERVER_DOMAIN}/subscription?success=true&session_id={CHECKOUT_SESSION_ID}&token=${req.query.token}`, // enrollamos al user aquí de una vez?
     cancel_url: `${CLIENT_DOMAIN}?canceled=true`,
   });
 
