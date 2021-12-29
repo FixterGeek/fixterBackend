@@ -67,7 +67,7 @@ router.get('/subscription', verifyToken, async (req, res) => {
     customerId: customer.id,
     ...customer.subscriptions.data[0]
   }
-  req.user.role = 'PLUS'
+  if (req.user.role !== 'ADMIN') { req.user.role = 'PLUS' }
   await req.user.save()
   res.redirect(303, `${CLIENT_DOMAIN}?success=true`);
 })
@@ -75,12 +75,16 @@ router.get('/subscription', verifyToken, async (req, res) => {
 router.get('/billing', verifyToken, async (req, res) => {
   const returnUrl = `${CLIENT_DOMAIN}?success=true`;
   const customerId = req.user.subscription.customerId;
+  try {
+    const portalSession = await stripe.billingPortal.sessions.create({
+      customer: customerId,
+      return_url: returnUrl,
+    });
+    res.redirect(303, portalSession.url);
+  } catch (e) {
+    res.status(404)
+  }
 
-  const portalSession = await stripe.billingPortal.sessions.create({
-    customer: customerId,
-    return_url: returnUrl,
-  });
-  res.redirect(303, portalSession.url);
 })
 
 // mail
