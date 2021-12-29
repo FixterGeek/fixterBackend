@@ -1,13 +1,14 @@
 const express = require("express");
+const User = require('../models/User')
 const { verifyToken } = require("../helpers/jwt");
 const { sendDisciplineChallenge } = require("../helpers/mailer");
 const router = express.Router();
 const stripe = require('stripe')('sk_test_51K6dXmJ7Zwl77LqntfyjDm7s6ZFZYuiCB2G00swjcN8VzyYsZZfFiWOfYcMnveiixSaVtYsqdCPipWAonEMCaREy00rG91msfD');
 
-const CLIENT_DOMAIN = 'http://localhost:3000/pricing';
-// const CLIENT_DOMAIN = 'https://fixter.camp/pricing';
-// const SERVER_DOMAIN = 'https://fixtercamp.herokuapp.com'
-const SERVER_DOMAIN = 'http://localhost:8000'
+// const CLIENT_DOMAIN = 'http://localhost:3000/pricing';
+const CLIENT_DOMAIN = 'https://fixter.camp/pricing';
+const SERVER_DOMAIN = 'https://fixtercamp.herokuapp.com'
+// const SERVER_DOMAIN = 'http://localhost:8000'
 
 /* GET home page */
 router.get("/", (req, res, next) => {
@@ -50,14 +51,14 @@ router.get('/create-checkout-session/monthly', verifyToken, async (req, res) => 
       },
     ],
     mode: 'subscription',
-    success_url: `${SERVER_DOMAIN}/subscription?success=true&session_id={CHECKOUT_SESSION_ID}&token=${req.query.token}`, // enrollamos al user aquí de una vez?
+    success_url: `${SERVER_DOMAIN}/subscription?success=true&session_id={CHECKOUT_SESSION_ID}&token=${req.query.token}`,
     cancel_url: `${CLIENT_DOMAIN}?canceled=true`,
   });
 
   res.redirect(303, session.url);
 })
 
-router.get('/subscription', verifyToken, async (req, res) => {
+router.get('/subscription', verifyToken, async (req, res) => { // enrollamos al user aquí de una vez?
   if (!req.query.success) {
     res.redirect(303, `${CLIENT_DOMAIN}?canceled=true`)
   }
@@ -100,21 +101,23 @@ router.post('/webhook', bodyParser.raw({ type: 'application/json' }), async (req
   }
   // Handle the event
   switch (event.type) {
-    case 'payment_intent.succeeded':
-      const paymentIntent = event.data.object;
-      console.log(event)
-      // Then define and call a function to handle the event payment_intent.succeeded
+    case 'customer.subscription.deleted': // we need to cancel when release?
+      /**
+       * 1. get user
+       * 2. update user
+       * 3. create email/notification
+       */
+      const subscription = event.data.object;
+      console.log('subscription:', subscription)
+      const customerId = subscription.customer
+      const user = User.findOne({ 'subscription.customer': customerId })
+      if (!user) { break; }
+      user.role = 'GUEST'
+      await user.save()
       break;
-    case 'subscription_schedule.updated':
-      // console.log("all event: ", event)
-      console.log("OBJECT: => ", JSON.stringify(event.data.object))
-    // ... handle other event types
     default:
       console.log(`Unhandled event type ${event.type}`);
-      console.log(`Todo: ${JSON.stringify(event)}`);
-      console.log(`Data Object: ${JSON.stringify(event.data.object)}`);
   }
-
   // Return a 200 response to acknowledge receipt of the event
   res.send();
 })
