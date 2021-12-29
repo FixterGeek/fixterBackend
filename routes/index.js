@@ -95,6 +95,7 @@ router.post('/webhook', async (req, res) => {
     event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
   } catch (err) {
     res.status(400).send(`Webhook Error: ${err.message}`);
+    console.log(err)
     return;
   }
   // Handle the event
