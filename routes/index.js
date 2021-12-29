@@ -101,19 +101,13 @@ router.post('/webhook', bodyParser.raw({ type: 'application/json' }), async (req
   }
   // Handle the event
   switch (event.type) {
-    case 'customer.subscription.deleted': // we need to cancel when release?
-      /**
-       * 1. get user
-       * 2. update user
-       * 3. create email/notification
-       */
+    case 'customer.subscription.deleted':
       const subscription = event.data.object;
-      console.log('subscription:', subscription)
       const customerId = subscription.customer
       const user = await User.findOne({ 'subscription.customer': customerId })
       if (!user) { break; }
       user.role = 'GUEST'
-      user.subscription.status = subscription.status
+      user.subscription.status: subscription.status
       await user.save()
       break;
     default:
