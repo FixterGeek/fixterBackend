@@ -31,6 +31,15 @@ const debug = require("debug")(
 
 const app = express();
 
+// Use JSON parser for all non-webhook routes
+app.use((req, res, next) => {
+	if (req.originalUrl === '/webhook') {
+		next();
+	} else {
+		express.json()(req, res, next);
+	}
+});
+
 // Middleware Setup
 app.use(logger("dev"));
 app.use(bodyParser.json());
