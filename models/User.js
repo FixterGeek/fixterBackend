@@ -22,7 +22,7 @@ let userSchema = new Schema(
       enum: ["ADMIN", "SELLER", "GUEST", "PLUS", "STUDENT"],
       default: "GUEST"
     },
-    plusDate: Date,
+    subscription: Object,
     email: String,
     facebookId: String,
     googleId: String,

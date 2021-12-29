@@ -6,6 +6,8 @@ const stripe = require('stripe')('sk_test_51K6dXmJ7Zwl77LqntfyjDm7s6ZFZYuiCB2G00
 
 // const CLIENT_DOMAIN = 'http://localhost:3000/pricing';
 const CLIENT_DOMAIN = 'https://fixter.camp/pricing';
+const SERVER_DOMAIN = 'https://fixtercamp.herokuapp.com'
+// const SERVER_DOMAIN = 'http://localhost:8000'
 
 /* GET home page */
 router.get("/", (req, res, next) => {
@@ -31,7 +33,24 @@ router.get('/create-checkout-session/yearly', verifyToken, async (req, res) => {
       trial_period_days: 30,
     },
     mode: 'subscription',
-    success_url: `https://fixtercamp.herokuapp.com/subscription?success=true&token=${req.query.token}`, // enrollamos al user aquí de una vez?
+    success_url: `${SERVER_DOMAIN}/subscription?success=true&session_id={CHECKOUT_SESSION_ID}&token=${req.query.token}`, // enrollamos al user aquí de una vez?
+    cancel_url: `${CLIENT_DOMAIN}?canceled=true`,
+  });
+  console.log("session => ", session)
+  res.redirect(303, session.url);
+})
+
+router.get('/create-checkout-session/monthly', verifyToken, async (req, res) => {
+  const session = await stripe.checkout.sessions.create({
+    customer_email: req.user ? req.user.email : '',
+    line_items: [
+      {
+        price: req.query.id,
+        quantity: 1,
+      },
+    ],
+    mode: 'subscription',
+    success_url: `${SERVER_DOMAIN}/subscription?success=true&token=${req.query.token}`, // enrollamos al user aquí de una vez?
     cancel_url: `${CLIENT_DOMAIN}?canceled=true`,
   });
 
@@ -42,9 +61,26 @@ router.get('/subscription', verifyToken, async (req, res) => {
   if (!req.query.success) {
     res.redirect(303, `${CLIENT_DOMAIN}?canceled=true`)
   }
-  req.user.plusDate = new Date()
+  const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
+  const customer = await stripe.customers.retrieve(session.customer, { expand: ['subscriptions'] });
+  req.user.subscription = {
+    customerId: customer.id,
+    ...customer.subscriptions.data[0]
+  }
   req.user.role = 'PLUS'
+  await req.user.save()
   res.redirect(303, `${CLIENT_DOMAIN}?success=true`);
+})
+
+router.get('/billing', verifyToken, async (req, res) => {
+  const returnUrl = `${CLIENT_DOMAIN}?success=true`;
+  const customerId = req.user.subscription.customerId;
+
+  const portalSession = await stripe.billingPortal.sessions.create({
+    customer: customerId,
+    return_url: returnUrl,
+  });
+  res.redirect(303, portalSession.url);
 })
 
 // mail

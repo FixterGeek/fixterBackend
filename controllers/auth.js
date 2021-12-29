@@ -1,6 +1,9 @@
 let User = require("../models/User");
 let { generateToken } = require("../helpers/jwt");
 let { welcomeMail, sendPasswordChanged } = require("../helpers/mailer");
+const stripe = require('stripe')('sk_test_51K6dXmJ7Zwl77LqntfyjDm7s6ZFZYuiCB2G00swjcN8VzyYsZZfFiWOfYcMnveiixSaVtYsqdCPipWAonEMCaREy00rG91msfD');
+
+
 let controller = {};
 
 controller.changePassword = async (req, res) => {
@@ -34,6 +37,14 @@ controller.update = async (req, res) => {
 
 controller.self = async (req, res) => {
 	let { user } = req
+	// checking subscriptions
+	if (user.role !== 'ADMIN' && user.role === 'PLUS') {
+		const customer = await stripe.customers.retrieve(user.subscription.customerId, { expand: ['subscriptions'] });
+		if (customer.status !== 'trialing' && customer.status !== 'active') {
+			user.role = 'GUEST'
+			await user.save()
+		}
+	}
 	return res.status(200).send(user)
 }
 
