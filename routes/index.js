@@ -1,6 +1,7 @@
 const express = require("express");
 const { verifyToken } = require("../helpers/jwt");
 const { sendDisciplineChallenge } = require("../helpers/mailer");
+const { buffer } = require('micro')
 const router = express.Router();
 const stripe = require('stripe')('sk_test_51K6dXmJ7Zwl77LqntfyjDm7s6ZFZYuiCB2G00swjcN8VzyYsZZfFiWOfYcMnveiixSaVtYsqdCPipWAonEMCaREy00rG91msfD');
 
@@ -91,8 +92,9 @@ const bodyParser = require('body-parser');
 router.post('/webhook', bodyParser.raw({ type: 'application/json' }), async (req, res) => {
   const sig = req.headers['stripe-signature'];
   let event;
+  const bodyBuffer = await buffer(req.body)
   try {
-    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(bodyBuffer, sig, endpointSecret);
   } catch (err) {
     res.status(400).send(`Webhook Error: ${err.message}`);
     console.log(err)
