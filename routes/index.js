@@ -110,9 +110,10 @@ router.post('/webhook', bodyParser.raw({ type: 'application/json' }), async (req
       const subscription = event.data.object;
       console.log('subscription:', subscription)
       const customerId = subscription.customer
-      const user = User.findOne({ 'subscription.customer': customerId })
+      const user = await User.findOne({ 'subscription.customer': customerId })
       if (!user) { break; }
       user.role = 'GUEST'
+      user.subscription.status = subscription.status
       await user.save()
       break;
     default:
