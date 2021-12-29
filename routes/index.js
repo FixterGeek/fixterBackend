@@ -37,7 +37,6 @@ router.get('/create-checkout-session/yearly', verifyToken, async (req, res) => {
     success_url: `${SERVER_DOMAIN}/subscription?success=true&session_id={CHECKOUT_SESSION_ID}&token=${req.query.token}`, // enrollamos al user aquí de una vez?
     cancel_url: `${CLIENT_DOMAIN}?canceled=true`,
   });
-  console.log("session => ", session)
   res.redirect(303, session.url);
 })
 
@@ -107,7 +106,7 @@ router.post('/webhook', bodyParser.raw({ type: 'application/json' }), async (req
       const user = await User.findOne({ 'subscription.customer': customerId })
       if (!user) { break; }
       user.role = 'GUEST'
-      user.subscription.status: subscription.status
+      user.subscription.status = subscription.status
       await user.save()
       break;
     default:
