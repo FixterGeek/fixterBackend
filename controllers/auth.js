@@ -36,15 +36,7 @@ controller.update = async (req, res) => {
 }
 
 controller.self = async (req, res) => {
-	let { user } = req
-	// checking subscriptions NO ES NECESARIO YA QUE TENEMOS LOS WEBHOOKS
-	// if (user.role !== 'ADMIN' && user.role === 'PLUS') {
-	// 	const customer = await stripe.customers.retrieve(user.subscription.customerId, { expand: ['subscriptions'] });
-	// 	if (customer.status !== 'trialing' && customer.status !== 'active') {
-	// 		user.role = 'GUEST'
-	// 		await user.save()
-	// 	}
-	// }
+	const user = await User.findById(req.user._id).populate('bootcamps')
 	return res.status(200).send(user)
 }
 
