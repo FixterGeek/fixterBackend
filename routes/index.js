@@ -116,36 +116,41 @@ router.post('/webhook', bodyParser.raw({ type: 'application/json' }), async (req
   res.send();
 })
 
+
+// const emailsOne = [
+//   'lgabrich@hotmail.com',
+//   'pcromero2207@hotmail.com',
+//   'rockocb12@gmail.com',
+//   'magetzyestrada5@gmail.com',
+//   'marijotl_12@hotmail.com',
+//   'rflores@surveyup.com.mx',
+//   'tesah74@gmail.com',
+//   'hubencam0907@gmail.com',
+//   'covaale457@gmail.com',
+//   'rodrigopi51.49@gmail.com',
+//   'behec.dev@gmail.com',
+//   'alfonsoomaster@gmail.com',
+//   'carlamafc@gmail.com',
+//   'rahelish@hotmail.com',
+//   'yolanda.rochaa90@gmail.com',
+//   'michaelcastillo.pe@hotmail.com',
+//   'marcarrimor@gmail.com',
+//   'fixtergeek@gmail.com',
+// ] // sent Dic 21th 2021
+// const emailsTwo = [
+//   'blanca.aloma7@gmail.com',
+//   'yann.mhdz@gmail.com',
+//   'tesah74@gmail.com'
+// ] // sent...
+// const emailsThree = ['pcromero2207@hotmail.com']
+// const january1 = ['gpehdzl@gmail.com', 'irmrt96@gmail.com']
+// const jan2 = ['hoshi.coeto@gmail.com']
+// const jan3 = ['raulsancar@gmail.com']
+// const jan4 = ['elizabethjimenezfernandez2@gmail.com']
 // mail
+
 // router.get("/blissi", (req, res, next) => {
-//   //res.render('index');
-//   const emailsOne = [
-//     'lgabrich@hotmail.com',
-//     'pcromero2207@hotmail.com',
-//     'rockocb12@gmail.com',
-//     'magetzyestrada5@gmail.com',
-//     'marijotl_12@hotmail.com',
-//     'rflores@surveyup.com.mx',
-//     'tesah74@gmail.com',
-//     'hubencam0907@gmail.com',
-//     'covaale457@gmail.com',
-//     'rodrigopi51.49@gmail.com',
-//     'behec.dev@gmail.com',
-//     'alfonsoomaster@gmail.com',
-//     'carlamafc@gmail.com',
-//     'rahelish@hotmail.com',
-//     'yolanda.rochaa90@gmail.com',
-//     'michaelcastillo.pe@hotmail.com',
-//     'marcarrimor@gmail.com',
-//     'fixtergeek@gmail.com',
-//   ] // sent Dic 21th 2021
-//   const emailsTwo = [
-//     'blanca.aloma7@gmail.com',
-//     'yann.mhdz@gmail.com',
-//     'tesah74@gmail.com'
-//   ] // sent...
-//   const emailsThree = ['pcromero2207@hotmail.com']
-//   sendDisciplineChallenge([])
+//   sendDisciplineChallenge(jan4)
 //   res.json({
 //     developedBy: "FixterGeek",
 //     year: 2019,

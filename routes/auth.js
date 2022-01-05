@@ -25,10 +25,25 @@ router.patch('/self',
 //login
 router.post(
   "/login",
-  passport.authenticate("local"),
-  tryCatch(controller.login)
-);
-// recovery
+  (req, res, next) => {
+    const errors = {
+      IncorrectPasswordError: { type: 'passwordError', message: 'Password incorrecto' },
+      IncorrectUsernameError: { type: 'emailError', message: 'Email incorrecto' },
+    }
+    passport.authenticate('local', (err, user, info) => {
+      console.log("La info: ", JSON.stringify(info))
+      if (err) { return next(err) }
+      if (!user) {
+        return res.status(403).json(errors[info.name])
+      }
+      req.logIn(user, function (err) {
+        if (err) { return next(err); }
+        return next()
+      })
+    })(req, res, next)
+  }, tryCatch(controller.login));
+
+// recovery => check this one too, we need to send a template to receive new password
 router.post('/recovery',
   tryCatch(controller.recovery)
 )
